@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "fast-food"
+  "defaultProject": "fast-food",
+  "cli": {
+    "analytics": "727c65fa-eae5-4526-839d-024b8128a7e9"
+  }
 }

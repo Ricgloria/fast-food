@@ -1,0 +1,121 @@
+<div class="top-bar">
+  <h2 class="title">Usuários</h2>
+</div>
+<div class="container mt-3 pb-2">
+  <div class="row">
+    <div class="col-12 p-0">
+      <h2 class="titles">
+        <ng-container *ngIf="!isEdit && !isSee">
+          Novo
+        </ng-container>
+        <ng-container *ngIf="isSee && !isEdit">
+          Ver
+        </ng-container>
+        <ng-container *ngIf="isSee && isEdit">
+          Editar
+        </ng-container>
+        usuário</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <form style="min-height: 301px" [formGroup]="userForm" class="row box pt-3 pb-3 mb-3">
+        <div class="col-lg-8 form-group">
+          <label for="name">Nome:</label>
+          <input formControlName="name" class="form-control" id="name" type="text">
+        </div>
+        <div class="col-lg-4 form-group">
+          <label for="permission">Permissão:</label>
+          <select formControlName="permission" class="custom-select form-control" id="permission">
+            <option [value]="null" selected>Selecione...</option>
+            <option [value]="userPermission.master">{{userPermission.master | userPermissionPipe}}</option>
+            <option [value]="userPermission.admin">{{userPermission.admin | userPermissionPipe}}</option>
+            <option [value]="userPermission.collaborator">{{userPermission.collaborator | userPermissionPipe}}</option>
+          </select>
+        </div>
+        <div class="col-lg-4 form-group">
+          <label for="cpf">CPF:</label>
+          <input formControlName="cpf" class="form-control" id="cpf" [mask]="mask.cpf" type="text">
+        </div>
+        <div class="col-lg-4 form-group">
+          <label for="phone">Telefone:</label>
+          <input formControlName="phone" class="form-control" id="phone" [mask]="getPhoneMask()" type="text">
+        </div>
+        <ng-container *ngIf="!isSee">
+          <div class="col-lg-4 form-group">
+            <label for="password">Senha:</label>
+            <input formControlName="password" id="password" class="form-control" type="text">
+          </div>
+        </ng-container>
+        <ng-container *ngIf="isSee">
+          <div class="col-lg-4 form-group">
+            <label for="status">Status:</label>
+            <select formControlName="status" id="status" class="custom-select form-control">
+              <option [value]="true">Ativo</option>
+              <option [value]="false">Desativado</option>
+            </select>
+          </div>
+        </ng-container>
+        <div class="col-lg-12 form-group">
+          <label for="address">Endereço</label>
+          <input formControlName="address" id="address" class="form-control" type="text">
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <ng-container *ngIf="isSee">
+            <button (click)="deleteUser()" class="btn btn-outline-danger mr-2">Excluir</button>
+            <button (click)="seeState()" class="btn btn-outline-secondary mr-2">Cancelar visualização</button>
+            <button (click)="editState()" class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+          </ng-container>
+          <button [disabled]="userForm.invalid || userForm.disabled || !userForm.touched" (click)="saveUser()" type="button" class="primary btn-fast btn-ripple">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 p-0">
+      <h2 class="titles">Todos os usuários</h2>
+    </div>
+  </div>
+  <div class="row box pt-3 pb-3">
+    <div class="col-12 form-group">
+      <label for="search">Buscar:</label>
+      <input class="form-control w-auto" type="text" id="search">
+    </div>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="width: 35%">Usuário</th>
+            <th scope="col" style="width: 30%">Telefone</th>
+            <th scope="col" style="width: 20%">Tipo</th>
+            <th scope="col" style="width: 10%">Status</th>
+            <th scope="col" style="width: 5%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users | paginate: paginateConfig; let idx = index">
+            <td>{{user.name}}</td>
+            <td>{{user.phone | mask: user.phone.length === 10 ? mask.phone : mask.cellphone}}</td>
+            <td>{{user.permission | userPermissionPipe}}</td>
+            <td>{{user.status | userStatus}}</td>
+            <td class="text-right">
+              <a (click)="onSeeClick(user)" class="pointer">
+                <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 mt-2">
+      <pagination-controls
+        id="users" (pageChange)="paginateConfig.currentPage = $event"
+        class="custom-pagination">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+

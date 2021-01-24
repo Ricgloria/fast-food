@@ -1,0 +1,167 @@
+<div (window:resize)="checkWindowSize()" [class.smartphone]="isSmartphone" class="wrapper">
+  <nav class="sidebar" [class.hide-sidebar]="hideSidebar">
+    <div class="row m-0">
+      <div class="col-12 nav-header">
+        <h2>Fast Food</h2>
+      </div>
+      <div class="row w-100 m-0 only-nav">
+        <ul>
+          <li (click)="checkCollapse()" [routerLinkActive]="['link-focus']">
+            <a routerLink="./caixa">
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11.381" height="7.967" viewBox="0 0 11.381 7.967">
+                  <defs>
+                    <style>.cash {
+                      fill: #fff;
+                      stroke: none!important;
+                    }</style>
+                  </defs>
+                  <path class="cash"
+                        d="M11.046,2.649a5.266,5.266,0,0,0-2.07-.4c-2.19,0-4.381,1.109-6.571,1.109A5.4,5.4,0,0,1,.758,3.115a.608.608,0,0,0-.184-.029A.566.566,0,0,0,0,3.651V9.293a.566.566,0,0,0,.335.524,5.263,5.263,0,0,0,2.07.4c2.19,0,4.381-1.109,6.571-1.109a5.4,5.4,0,0,1,1.648.244.608.608,0,0,0,.184.029.566.566,0,0,0,.574-.566V3.173A.566.566,0,0,0,11.046,2.649ZM.854,4.032a6.189,6.189,0,0,0,1.115.159,1.139,1.139,0,0,1-1.115.917Zm0,5.068v-.85A1.138,1.138,0,0,1,1.987,9.343,4.3,4.3,0,0,1,.854,9.1Zm4.837-1.16A1.585,1.585,0,0,1,4.268,6.233,1.585,1.585,0,0,1,5.691,4.526,1.585,1.585,0,0,1,7.113,6.233,1.585,1.585,0,0,1,5.691,7.941Zm4.837.494a6.114,6.114,0,0,0-.966-.15,1.136,1.136,0,0,1,.966-.876Zm0-4.2a1.136,1.136,0,0,1-.992-1.095,4.275,4.275,0,0,1,.992.225Z"
+                        transform="translate(0 -2.25)"/>
+                </svg>
+                <span class="font-weight-bold ft-10">CAIXA</span>
+              </div>
+            </a>
+          </li>
+          <li (click)="checkCollapse()" [routerLinkActive]="['link-focus']">
+            <a routerLink="./usuarios">
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10.382" height="12.016" viewBox="0 0 10.382 12.016">
+                  <defs>
+                    <style>.user {
+                      fill: #fff;
+                      stroke: none!important;
+                    }</style>
+                  </defs>
+                  <g transform="translate(-34.007)">
+                    <g transform="translate(36.85)">
+                      <g transform="translate(0)">
+                        <path class="user"
+                              d="M154.652,0A2.351,2.351,0,0,0,152.3,2.348V3.565a2.348,2.348,0,1,0,4.7,0V2.348A2.35,2.35,0,0,0,154.652,0Z"
+                              transform="translate(-152.304)"/>
+                      </g>
+                    </g>
+                    <g transform="translate(34.007 6.294)">
+                      <g transform="translate(0)">
+                        <path class="user"
+                              d="M44.376,264.575a5.955,5.955,0,0,0-3.384-2.675.094.094,0,0,0-.094.023,9.8,9.8,0,0,1-1.7,1.291,12.2,12.2,0,0,1-1.7-1.291.094.094,0,0,0-.094-.023,5.954,5.954,0,0,0-3.384,2.675.094.094,0,0,0,0,.1,6.021,6.021,0,0,0,10.356,0A.094.094,0,0,0,44.376,264.575Z"
+                              transform="translate(-34.007 -261.896)"/>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <span class="font-weight-bold ft-10">USUÁRIOS</span>
+              </div>
+            </a>
+          </li>
+          <li (click)="checkCollapse()" [routerLinkActive]="['link-focus']">
+            <a routerLink="./produtos">
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9.693" height="9.693" viewBox="0 0 9.693 9.693">
+                  <defs>
+                    <style>.product {
+                      fill: #fff;
+                      stroke: none!important;
+                    }</style>
+                  </defs>
+                  <path class="product"
+                        d="M9.645,3.495,8.687.621A.906.906,0,0,0,7.826,0H5.149V3.635H9.668A.865.865,0,0,0,9.645,3.495ZM4.543,0H1.867a.906.906,0,0,0-.861.621L.047,3.495a.865.865,0,0,0-.023.14H4.543ZM0,4.241V8.784a.909.909,0,0,0,.909.909H8.784a.909.909,0,0,0,.909-.909V4.241Z"/>
+                </svg>
+                <span class="font-weight-bold ft-10">PRODUTOS</span>
+              </div>
+            </a>
+          </li>
+          <li (click)="checkCollapse()" [routerLinkActive]="['link-focus']">
+            <a routerLink="./metodos-de-pagamento">
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11.381" height="7.588" viewBox="0 0 11.381 7.588">
+                  <defs>
+                    <style>.news {
+                      fill: #fff;
+                      stroke: none!important;
+                    }</style>
+                  </defs>
+                  <path class="news"
+                        d="M10.907,4.5H1.739a.474.474,0,0,0-.474.474v.158H.474A.474.474,0,0,0,0,5.607v5.375a1.107,1.107,0,0,0,1.107,1.107h9.326a.948.948,0,0,0,.948-.948V4.974A.474.474,0,0,0,10.907,4.5Zm-9.8,6.639a.158.158,0,0,1-.158-.158v-4.9h.316v4.9A.158.158,0,0,1,1.107,11.139Zm4.663-.316h-3a.237.237,0,0,1-.237-.237v-.158a.237.237,0,0,1,.237-.237h3a.237.237,0,0,1,.237.237v.158A.237.237,0,0,1,5.77,10.823Zm4.11,0h-3a.237.237,0,0,1-.237-.237v-.158a.237.237,0,0,1,.237-.237h3a.237.237,0,0,1,.237.237v.158A.237.237,0,0,1,9.88,10.823Zm-4.11-1.9h-3a.237.237,0,0,1-.237-.237V8.531a.237.237,0,0,1,.237-.237h3a.237.237,0,0,1,.237.237v.158A.237.237,0,0,1,5.77,8.926Zm4.11,0h-3a.237.237,0,0,1-.237-.237V8.531a.237.237,0,0,1,.237-.237h3a.237.237,0,0,1,.237.237v.158A.237.237,0,0,1,9.88,8.926Zm0-1.9H2.766a.237.237,0,0,1-.237-.237V6a.237.237,0,0,1,.237-.237H9.88A.237.237,0,0,1,10.117,6v.79A.237.237,0,0,1,9.88,7.029Z"
+                        transform="translate(0 -4.5)"/>
+                </svg>
+                <span class="font-weight-bold ft-10">MÉTODOS DE PAGAMENTO</span>
+              </div>
+            </a>
+          </li>
+          <li (click)="checkCollapse()" [routerLinkActive]="['link-focus']">
+            <a routerLink="./relatorios">
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9.297" height="11.254" viewBox="0 0 9.297 11.254">
+                  <defs>
+                    <style>.req {
+                      fill: #fff;
+                      stroke: none!important;
+                    }</style>
+                  </defs>
+                  <path class="req"
+                        d="M9,2.056a3.151,3.151,0,0,0-3.18,3.158v7.48H7.039V10.247h3.914v2.446h1.223V5.214A3.151,3.151,0,0,0,9,2.056ZM2.88,1.44l1.8,2.936h.188A3.2,3.2,0,0,1,7.039,1.7V1.44Z"
+                        transform="translate(-2.88 -1.44)"/>
+                </svg>
+                <span class="font-weight-bold ft-10">RELATÓRIOS</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a>
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
+                  <defs>
+                    <style>.param {
+                      fill: none!important;
+                      stroke: #FFFFFF;
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 1px;
+                    }</style>
+                  </defs>
+                  <path class="param" d="M6.875,5.5A1.375,1.375,0,1,1,5.5,4.125,1.375,1.375,0,0,1,6.875,5.5Z"/>
+                  <path class="param"
+                        d="M8.892,6.875a.756.756,0,0,0,.151.834l.028.027a.917.917,0,1,1-1.3,1.3l-.027-.028a.762.762,0,0,0-1.293.541v.078a.917.917,0,1,1-1.833,0V9.584a.756.756,0,0,0-.495-.692.756.756,0,0,0-.834.151l-.027.028a.917.917,0,1,1-1.3-1.3l.027-.027a.762.762,0,0,0-.541-1.293H1.375a.917.917,0,1,1,0-1.833h.041a.756.756,0,0,0,.692-.495.756.756,0,0,0-.151-.834L1.93,3.263a.917.917,0,1,1,1.3-1.3l.027.028a.756.756,0,0,0,.834.151h.037a.756.756,0,0,0,.458-.692V1.375a.917.917,0,1,1,1.833,0v.041a.762.762,0,0,0,1.293.541l.027-.027a.917.917,0,1,1,1.3,1.3l-.028.027a.756.756,0,0,0-.151.834v.037a.756.756,0,0,0,.692.458h.078a.917.917,0,1,1,0,1.833H9.584A.756.756,0,0,0,8.892,6.875Z"/>
+                </svg>
+                <span class="font-weight-bold ft-10">TEXTOS</span>
+              </div>
+            </a>
+          </li>
+          <li (click)="logout()">
+            <a>
+              <div class="section-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11.525" height="11.525" viewBox="0 0 11.525 11.525">
+                  <defs>
+                    <style>.a, .b {
+                      fill: #fff;
+                    }
+
+                    .b {
+                      stroke: #fff;
+                      stroke-width: 0;
+                    }</style>
+                  </defs>
+                  <path class="a"
+                        d="M5.763,0a5.763,5.763,0,1,0,5.763,5.763A5.769,5.769,0,0,0,5.763,0Zm0,10.478a4.715,4.715,0,1,1,4.715-4.715A4.72,4.72,0,0,1,5.763,10.478Z"/>
+                  <path class="b" d="M1.954,0,1.6.355,2.944,1.7H0v.508H2.944L1.6,3.553l.355.355L3.909,1.954Z"
+                        transform="translate(4 3.62)"/>
+                </svg>
+                <span class="font-weight-bold ft-10">SAIR</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div [class.hide-sidebar]="hideSidebar" class="content">
+    <div class="container-fluid min-vh-100 position-relative">
+      <button (click)="hideSidebar = !hideSidebar" class="btn toggle">
+        <img src="../../../../assets/img/svg/ios-menu.svg" alt="toggle">
+      </button>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

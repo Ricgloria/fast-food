@@ -1,0 +1,96 @@
+<div class="top-bar">
+  <h2 class="title">Método de Pagamento</h2>
+</div>
+<div class="container mt-3 pb-2">
+  <div class="row">
+    <div class="col-12 p-0">
+      <h2 class="titles">
+        <ng-container *ngIf="!isEdit && !isSee">
+          Novo
+        </ng-container>
+        <ng-container *ngIf="isSee && !isEdit">
+          Ver
+        </ng-container>
+        <ng-container *ngIf="isSee && isEdit">
+          Editar
+        </ng-container>
+        produto</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <form [formGroup]="productForm" class="row box pt-3 pb-3 mb-3">
+        <div class="col-lg-8 form-group">
+          <label for="name">Nome:</label>
+          <input formControlName="product_name" class="form-control" id="name" type="text">
+        </div>
+        <div class="col-lg-4 form-group">
+          <label for="value">Valor:</label>
+          <input currencyMask formControlName="product_value" class="form-control" id="value" type="text">
+        </div>
+        <ng-container *ngIf="isSee">
+          <div class="col-lg-4 form-group">
+            <label for="status">Status:</label>
+            <select formControlName="status" id="status" class="custom-select form-control">
+              <option [value]="true">Ativo</option>
+              <option [value]="false">Desativado</option>
+            </select>
+          </div>
+        </ng-container>
+        <div class="col-12 d-flex justify-content-end">
+          <ng-container *ngIf="isSee">
+            <button (click)="deleteProduct()" class="btn btn-outline-danger mr-2">Excluir</button>
+            <button (click)="seeState()" class="btn btn-outline-secondary mr-2">Cancelar visualização</button>
+            <button (click)="editState()" class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+          </ng-container>
+          <button [disabled]="productForm.invalid || productForm.disabled || !productForm.touched" (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 p-0">
+      <h2 class="titles">Todos os produtos</h2>
+    </div>
+  </div>
+  <div class="row box pt-3 pb-3">
+    <div class="col-12 form-group">
+      <label for="search">Buscar:</label>
+      <input class="form-control w-auto" type="text" id="search">
+    </div>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="width: 35%">Produto</th>
+            <th scope="col" style="width: 30%">Valor</th>
+            <th scope="col" style="width: 10%">Status</th>
+            <th scope="col" style="width: 5%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of product | paginate: paginateConfig; let idx = index">
+            <td>{{product.product_name}}</td>
+            <td>{{product.product_value | currency: 'BRL'}}</td>
+            <td>{{product.status | userStatus}}</td>
+            <td class="text-right">
+              <a (click)="onSeeClick(product)" class="pointer">
+                <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 mt-2">
+      <pagination-controls
+        id="users" (pageChange)="paginateConfig.currentPage = $event"
+        class="custom-pagination">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
