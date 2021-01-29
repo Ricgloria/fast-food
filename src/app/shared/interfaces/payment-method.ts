@@ -1,5 +1,5 @@
 export interface PaymentMethod {
-  id_payment_method: number;
+  id_payment_method?: number;
   description: string;
-  status: boolean;
+  status: boolean | number;
 }

@@ -1,0 +1,10 @@
+<div  [class.is-disabled]="disabled" class="slider-container d-flex justify-content-center align-items-center flex-wrap">
+  <label class="status" [class.checked]="formValue">{{checkedText}}</label>
+  <label [class.checked]="formValue" class="switch ml-2 mr-2">
+    <input [disabled]="disabled" [readOnly]="readOnly" [ngModel]="formValue" (ngModelChange)="setValue($event)" type="checkbox">
+    <span class="slider round"></span>
+  </label>
+  <label class="status" [class.checked]="!formValue">{{notCheckedText}}</label>
+</div>
+
+

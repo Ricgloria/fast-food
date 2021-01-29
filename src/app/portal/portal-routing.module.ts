@@ -7,6 +7,7 @@ import {PaymentMethodComponent} from './payment-method/payment-method.component'
 import {SalesBoxComponent} from './sales-box/sales-box.component';
 import {ReportsComponent} from './reports/reports.component';
 import {ProductResolver} from '../core/resolver/product.resolver';
+import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
 
 const routes: Routes = [
   {
@@ -35,7 +36,10 @@ const routes: Routes = [
       },
       {
         path: 'metodos-de-pagamento',
-        component: PaymentMethodComponent
+        component: PaymentMethodComponent,
+        resolve: {
+          payments: PaymentMethodResolver
+        }
       },
       {
         path: 'relatorios',

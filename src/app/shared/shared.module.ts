@@ -4,22 +4,27 @@ import {SideBarComponent} from './components/side-bar/side-bar.component';
 import {RouterModule} from '@angular/router';
 import {UserPermissionPipe} from './pipes/user-permission.pipe';
 import { UserStatusPipe } from './pipes/user-status.pipe';
+import {SliderButtonComponent} from './components/slider-button/slider-button.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     SideBarComponent,
     UserPermissionPipe,
-    UserStatusPipe
+    UserStatusPipe,
+    SliderButtonComponent
   ],
   exports: [
     SideBarComponent,
     UserPermissionPipe,
-    UserStatusPipe
+    UserStatusPipe,
+    SliderButtonComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ]
 })
 export class SharedModule {

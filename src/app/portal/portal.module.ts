@@ -7,7 +7,7 @@ import { UsersComponent } from './users/users.component';
 import {SharedModule} from '../shared/shared.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxMaskModule} from 'ngx-mask';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import {NgxCurrencyModule} from 'ngx-currency';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
@@ -24,15 +24,16 @@ import { ReportsComponent } from './reports/reports.component';
     SalesBoxComponent,
     ReportsComponent
   ],
-  imports: [
-    CommonModule,
-    PortalRoutingModule,
-    SharedModule,
-    NgxPaginationModule,
-    NgxMaskModule,
-    ReactiveFormsModule,
-    NgxCurrencyModule
-  ],
+    imports: [
+        CommonModule,
+        PortalRoutingModule,
+        SharedModule,
+        NgxPaginationModule,
+        NgxMaskModule,
+        ReactiveFormsModule,
+        NgxCurrencyModule,
+        FormsModule
+    ],
   bootstrap: [
     PortalContainerComponent
   ]

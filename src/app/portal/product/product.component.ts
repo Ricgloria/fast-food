@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PaginationInstance} from 'ngx-pagination';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Product} from '../../shared/interfaces/product';
 import {ProductService} from '../../core/services/product.service';
-import {take} from 'rxjs/operators';
+import {debounceTime, take} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
   paginateConfig: PaginationInstance = {
     id: 'product',
@@ -20,11 +21,15 @@ export class ProductComponent implements OnInit {
     itemsPerPage: 10
   };
 
+  search = new FormControl();
+
+  subscription: Subscription | undefined;
   isEdit = false;
   isSee = false;
   productForm: FormGroup = this.newFormGroupFactory();
 
   products: Product[] = [];
+  filteredProducts: Product[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,9 +40,44 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  getData(): void {
     this.activatedRoute.data.pipe(take(1)).subscribe(res => {
       this.products = res.products;
+      this.filteredProducts = res.products;
+      this.filter();
     });
+  }
+
+  filter(): void {
+    this.subscription = this.search.valueChanges.pipe(debounceTime(200)).subscribe(
+      (value: string) => {
+        if (value) {
+          this.filteredProducts = this.onFilter(value);
+        } else {
+          this.filteredProducts = this.products;
+        }
+      }
+    );
+  }
+
+  getProducts(): void {
+    this.productService.getAllProducts().pipe(take(1)).subscribe(
+      res => {
+        this.filteredProducts = res;
+        this.products = res;
+      }
+    );
+  }
+
+  onFilter(value: string): Product[] {
+    return this.products.filter(prod => prod.product_name.toUpperCase().includes(value.toUpperCase()));
   }
 
   createForm(product?: Product): void {
@@ -93,7 +133,7 @@ export class ProductComponent implements OnInit {
     const id = this.productForm.get('id_product')?.value;
     this.productService.deleteProduct(id).pipe(take(1)).subscribe(
       res => {
-        this.products.splice(this.findProduct(id), 1);
+        this.getProducts();
         this.toast.success(res.message);
         this.seeState();
       },
@@ -114,7 +154,7 @@ export class ProductComponent implements OnInit {
   postProduct(product: Product): void {
     this.productService.postProduct(product).pipe(take(1)).subscribe(
       res => {
-        this.products.unshift(res);
+        this.getProducts();
         this.toast.success('Produto criado com sucesso');
         this.seeState();
       },
@@ -128,7 +168,7 @@ export class ProductComponent implements OnInit {
 
     this.productService.putProduct(product, id).pipe(take(1)).subscribe(
       res => {
-        this.products[this.findProduct(res.id_product)] = res;
+        this.getProducts();
         this.toast.success('Produto editado com sucesso');
         this.seeState();
       },
@@ -136,7 +176,22 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  findProduct(id: number | undefined): number {
-    return this.products.findIndex(pro => pro.id_product === id);
+  change(product: Product, event: boolean): void {
+    product.status = event ? 1 : 0;
+    this.disableAndEnable({...product});
+  }
+
+  disableAndEnable(product: Product): void {
+    const id: number = product.id_product || 0;
+    delete product.id_product;
+
+    this.productService.putProduct(product, id).pipe(take(1)).subscribe(
+      res => {
+        const message = res.status ? 'ativado' : 'inativado';
+        this.toast.success(`Produto ${message} com sucesso`);
+        this.seeState();
+      },
+      error => this.toast.error(error)
+    );
   }
 }

@@ -29,8 +29,8 @@
           <div class="col-lg-4 form-group">
             <label for="status">Status:</label>
             <select formControlName="status" id="status" class="custom-select form-control">
-              <option [value]="true">Ativo</option>
-              <option [value]="false">Desativado</option>
+              <option [value]="1">Ativo</option>
+              <option [value]="0">Desativado</option>
             </select>
           </div>
         </ng-container>
@@ -42,7 +42,7 @@
                     class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
           </ng-container>
           <button
-            [disabled]="paymentForm.invalid || paymentForm.disabled || !paymentForm.touched"
+            [disabled]="paymentForm.invalid || paymentForm.disabled || !paymentForm.dirty"
             (click)="savePaymentMethod()"
             type="button" class="primary btn-fast btn-ripple">
             Salvar
@@ -60,22 +60,24 @@
   <div class="row box pt-3 pb-3">
     <div class="col-12 form-group">
       <label for="search">Buscar:</label>
-      <input class="form-control w-auto" type="text" id="search">
+      <input [formControl]="search" class="form-control w-auto" type="text" id="search">
     </div>
     <div class="col-12">
       <div class="table-responsive">
         <table class="table table-hover">
           <thead class="thead-dark">
           <tr>
-            <th scope="col" style="width: 75%">Método</th>
-            <th scope="col" style="width: 20%">Status</th>
+            <th scope="col" style="width: 70%">Método</th>
+            <th class="text-center" scope="col" style="width: 25%">Status</th>
             <th scope="col" style="width: 5%"></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let paymentMethod of payments | paginate: paginateConfig; let idx = index">
-            <td>{{paymentMethod.description}}</td>
-            <td>{{paymentMethod.status | userStatus}}</td>
+          <tr *ngFor="let paymentMethod of filteredPayments | paginate: paginateConfig; let idx = index">
+            <td class="text-uppercase">{{paymentMethod.description}}</td>
+            <td>
+              <app-slider-button [ngModel]="!!paymentMethod.status" (ngModelChange)="change(paymentMethod, $event)"></app-slider-button>
+            </td>
             <td class="text-right">
               <a (click)="onSeeClick(paymentMethod)" class="pointer">
                 <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
@@ -88,7 +90,7 @@
     </div>
     <div class="col-12 mt-2">
       <pagination-controls
-        id="users" (pageChange)="paginateConfig.currentPage = $event"
+        id="payment" (pageChange)="paginateConfig.currentPage = $event"
         class="custom-pagination">
       </pagination-controls>
     </div>

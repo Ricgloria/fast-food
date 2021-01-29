@@ -14,7 +14,8 @@
         <ng-container *ngIf="isSee && isEdit">
           Editar
         </ng-container>
-        produto</h2>
+        produto
+      </h2>
     </div>
   </div>
   <div class="row">
@@ -41,9 +42,12 @@
           <ng-container *ngIf="isSee">
             <button (click)="deleteProduct()" class="btn btn-outline-danger mr-2">Excluir</button>
             <button (click)="seeState()" class="btn btn-outline-secondary mr-2">Cancelar visualização</button>
-            <button (click)="editState()" class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+            <button (click)="editState()"
+                    class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
           </ng-container>
-          <button [disabled]="productForm.invalid || productForm.disabled || !productForm.touched" (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple">Salvar</button>
+          <button [disabled]="productForm.invalid || productForm.disabled || !productForm.dirty"
+                  (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple">Salvar
+          </button>
         </div>
       </form>
     </div>
@@ -57,7 +61,7 @@
   <div class="row box pt-3 pb-3">
     <div class="col-12 form-group">
       <label for="search">Buscar:</label>
-      <input class="form-control w-auto" type="text" id="search">
+      <input [formControl]="search" class="form-control w-auto" type="text" id="search">
     </div>
     <div class="col-12">
       <div class="table-responsive">
@@ -65,16 +69,18 @@
           <thead class="thead-dark">
           <tr>
             <th scope="col" style="width: 35%">Produto</th>
-            <th scope="col" style="width: 30%">Valor</th>
-            <th scope="col" style="width: 10%">Status</th>
+            <th scope="col" style="width: 20%">Valor</th>
+            <th class="text-center" scope="col" style="width: 20%">Status</th>
             <th scope="col" style="width: 5%"></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let product of products | paginate: paginateConfig; let idx = index">
+          <tr *ngFor="let product of filteredProducts | paginate: paginateConfig; let idx = index">
             <td class="text-uppercase">{{product?.product_name}}</td>
             <td>{{product?.product_value | currency: 'BRL'}}</td>
-            <td>{{product?.status | userStatus}}</td>
+            <td>
+              <app-slider-button [ngModel]="product.status" (ngModelChange)="change(product, $event)"></app-slider-button>
+            </td>
             <td class="text-right">
               <a (click)="onSeeClick(product)" class="pointer">
                 <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
@@ -87,7 +93,7 @@
     </div>
     <div class="col-12 mt-2">
       <pagination-controls
-        id="users" (pageChange)="paginateConfig.currentPage = $event"
+        id="product" (pageChange)="paginateConfig.currentPage = $event"
         class="custom-pagination">
       </pagination-controls>
     </div>
