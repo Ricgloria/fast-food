@@ -11,6 +11,9 @@ import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {customCurrencyMaskConfig} from './shared/helpers/currency';
+import {HttpClientModule} from '@angular/common/http';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 registerLocaleData(localePt, 'pt');
 
@@ -21,9 +24,12 @@ registerLocaleData(localePt, 'pt');
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     NgxMaskModule.forRoot()
   ],

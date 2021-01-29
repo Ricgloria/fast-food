@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'userStatus'
 })
 export class UserStatusPipe implements PipeTransform {
-  transform(status: boolean): string {
+  transform(status: number | boolean | undefined): string {
     return status ? 'Ativo' : 'Desativado';
   }
 }

@@ -1,5 +1,5 @@
 <div class="top-bar">
-  <h2 class="title">Método de Pagamento</h2>
+  <h2 class="title">Produtos</h2>
 </div>
 <div class="container mt-3 pb-2">
   <div class="row">
@@ -32,8 +32,8 @@
           <div class="col-lg-4 form-group">
             <label for="status">Status:</label>
             <select formControlName="status" id="status" class="custom-select form-control">
-              <option [value]="true">Ativo</option>
-              <option [value]="false">Desativado</option>
+              <option [value]="1">Ativo</option>
+              <option [value]="0">Desativado</option>
             </select>
           </div>
         </ng-container>
@@ -71,10 +71,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let product of product | paginate: paginateConfig; let idx = index">
-            <td>{{product.product_name}}</td>
-            <td>{{product.product_value | currency: 'BRL'}}</td>
-            <td>{{product.status | userStatus}}</td>
+          <tr *ngFor="let product of products | paginate: paginateConfig; let idx = index">
+            <td class="text-uppercase">{{product?.product_name}}</td>
+            <td>{{product?.product_value | currency: 'BRL'}}</td>
+            <td>{{product?.status | userStatus}}</td>
             <td class="text-right">
               <a (click)="onSeeClick(product)" class="pointer">
                 <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
