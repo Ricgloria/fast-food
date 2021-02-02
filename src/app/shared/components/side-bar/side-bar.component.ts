@@ -7,9 +7,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent implements OnInit, AfterViewChecked {
+
   hideSidebar = false;
   isSmartphone = false;
-  collapseLinks = false;
 
   constructor(
     private route: Router,
@@ -29,10 +29,6 @@ export class SideBarComponent implements OnInit, AfterViewChecked {
     const screenWidth = document.documentElement.clientWidth;
     this.hideSidebar = screenWidth < 1080;
     this.isSmartphone = screenWidth < 1080;
-  }
-
-  checkCollapse(): void {
-    this.collapseLinks = false;
   }
 
   logout(): void {

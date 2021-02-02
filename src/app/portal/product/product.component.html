@@ -79,7 +79,7 @@
             <td class="text-uppercase">{{product?.product_name}}</td>
             <td>{{product?.product_value | currency: 'BRL'}}</td>
             <td>
-              <app-slider-button [ngModel]="product.status" (ngModelChange)="change(product, $event)"></app-slider-button>
+              <app-slider-button [ngModel]="!!product.status" (ngModelChange)="change(product, $event)"></app-slider-button>
             </td>
             <td class="text-right">
               <a (click)="onSeeClick(product)" class="pointer">

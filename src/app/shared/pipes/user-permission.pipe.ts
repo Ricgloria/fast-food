@@ -8,7 +8,7 @@ export class UserPermissionPipe implements PipeTransform {
 
   userPermission = UserPermission;
 
-  transform(permission: number): string {
+  transform(permission: string): string {
     switch (permission) {
       case this.userPermission.master:
         return 'Proprietário';

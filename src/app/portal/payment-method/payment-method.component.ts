@@ -7,7 +7,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
 import {PaymentMethodService} from '../../core/services/payment-method.service';
 import {debounceTime, take} from 'rxjs/operators';
-import {Product} from '../../shared/interfaces/product';
 
 @Component({
   selector: 'app-payment-method',

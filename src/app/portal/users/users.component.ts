@@ -1,22 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PaginationInstance} from 'ngx-pagination';
 import {mask} from '../../shared/helpers/mask.helper';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../shared/interfaces/user';
 import {UserPermission} from '../../shared/enum/user-permission.enum';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../core/services/user.service';
+import {Subscription} from 'rxjs';
+import {debounceTime, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   paginateConfig: PaginationInstance = {
     id: 'users',
     currentPage: 1,
     itemsPerPage: 10
   };
+
+  search = new FormControl();
+  subscription: Subscription | undefined;
 
   mask = mask;
   isEdit = false;
@@ -25,45 +33,55 @@ export class UsersComponent implements OnInit {
 
   userPermission = UserPermission;
 
-  users: User[] = [
-    {
-      id_user: 1,
-      name: 'Exemplo',
-      phone: '12991129999',
-      cpf: '37565663824',
-      permission: 1,
-      address: 'Exemplo',
-      password: '123456',
-      status: true,
-    },
-    {
-      id_user: 1,
-      name: 'Exemplo',
-      phone: '12991129999',
-      cpf: '37565663824',
-      permission: 2,
-      address: 'Exemplo',
-      password: '123456',
-      status: true,
-    },
-    {
-      id_user: 1,
-      name: 'Exemplo',
-      phone: '1236547952',
-      cpf: '37565663824',
-      permission: 3,
-      address: 'Exemplo',
-      password: '123456',
-      status: false
-    }
-  ];
+  users: User[] = [];
+  filteredUsers: User[] = [];
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private toast: ToastrService,
+    private activatedRoute: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  getAllUsers(): void {
+    this.userService.getAllUsers().pipe(take(1)).subscribe(
+      res => {
+        this.users = res;
+        this.filteredUsers = res;
+      },
+      error => this.toast.error(error)
+    );
+  }
+
+  getData(): void {
+    this.activatedRoute.data.pipe(take(1)).subscribe(
+      res => {
+        this.users = res.users;
+        this.filteredUsers = res.users;
+        this.filterUser();
+      }
+    );
+  }
+
+  filterUser(): void {
+    this.subscription = this.search.valueChanges.pipe(debounceTime(200)).subscribe(
+      (value: string) => {
+        if (value) {
+          this.filteredUsers = this.users.filter(user => user.name.toUpperCase().includes(value.toUpperCase()));
+        } else {
+          this.filteredUsers = this.users;
+        }
+      }
+    );
   }
 
   createForm(user?: User): void {
@@ -98,7 +116,7 @@ export class UsersComponent implements OnInit {
       phone: ['', Validators.required],
       password: ['', Validators.required],
       address: ['', Validators.required],
-      status: [true, Validators.required],
+      status: [1, Validators.required],
     });
   }
 
@@ -127,15 +145,68 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(): void {
-    console.log(this.userForm.get('id_user')?.value);
+    const id = this.userForm.get('id_user')?.value;
+    this.userService.deleteUser(id).pipe(take(1)).subscribe(
+      res => {
+        this.getAllUsers();
+        this.toast.success(res.message);
+        this.seeState();
+      },
+      error => this.toast.error(error)
+    );
   }
 
   saveUser(): void {
     const user: User = this.userForm.getRawValue();
+    user.status = Number(user.status);
     if (user.id_user) {
-      console.log(user);
+      this.putUser(user);
     } else {
-      console.log(user);
+      this.postUser(user);
     }
+  }
+
+  postUser(user: User): void {
+    this.userService.postUser(user).pipe(take(1)).subscribe(
+      () => {
+        this.getAllUsers();
+        this.toast.success('Usuário criado com sucesso');
+        this.seeState();
+      },
+      error => this.toast.error(error)
+    );
+  }
+
+  putUser(user: User): void {
+    const id: number = user.id_user || 0;
+    delete user.id_user;
+
+    this.userService.putUser(user, id).pipe(take(1)).subscribe(
+      () => {
+        this.toast.success(`Usuário editado com sucesso`);
+        this.getAllUsers();
+        this.seeState();
+      },
+      error => this.toast.error(error)
+    );
+  }
+
+  change(user: User, event: boolean): void {
+    user.status = event ? 1 : 0;
+    this.disableAndEnable({...user});
+  }
+
+  disableAndEnable(user: User): void {
+    const id: number = user.id_user || 0;
+    delete user.id_user;
+
+    this.userService.putUser(user, id).pipe(take(1)).subscribe(
+      res => {
+        const message = res.status ? 'ativado' : 'inativado';
+        this.toast.success(`Usuário ${message} com sucesso`);
+        this.seeState();
+      },
+      error => this.toast.error(error)
+    );
   }
 }

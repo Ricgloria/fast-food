@@ -1,10 +1,10 @@
 export interface User {
-  id_user: number;
+  id_user?: number;
   name: string;
-  permission: number;
+  permission: string;
   cpf: string;
   phone: string;
-  password: string;
+  password?: string;
   address: string;
-  status: boolean;
+  status: number | boolean;
 }

@@ -8,6 +8,7 @@ import {SalesBoxComponent} from './sales-box/sales-box.component';
 import {ReportsComponent} from './reports/reports.component';
 import {ProductResolver} from '../core/resolver/product.resolver';
 import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
+import {UserResolver} from '../core/resolver/user.resolver';
 
 const routes: Routes = [
   {
@@ -25,7 +26,10 @@ const routes: Routes = [
       },
       {
         path: 'usuarios',
-        component: UsersComponent
+        component: UsersComponent,
+        resolve: {
+          users: UserResolver
+        }
       },
       {
         path: 'produtos',
