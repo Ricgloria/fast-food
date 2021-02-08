@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {patterns} from '../../shared/helpers/patterns.helper';
+import {mask} from '../../shared/helpers/mask.helper';
+import {AuthService} from '../services/auth.service';
+import {ToastrService} from 'ngx-toastr';
+import {take} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +14,28 @@ import {patterns} from '../../shared/helpers/patterns.helper';
 export class LoginComponent implements OnInit {
 
   login: FormGroup;
+  mask = mask;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private toast: ToastrService,
+    private router: Router
   ) {
     this.login = this.formBuilder.group({});
   }
 
   ngOnInit(): void {
     this.login = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.pattern(patterns.email)])],
+      cpf: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   send(): void {
-    console.log(this.login?.getRawValue());
+    this.authService.login(this.login.getRawValue()).pipe(take(1)).subscribe(
+      () => this.router.navigate(['admin']),
+      error => this.toast.error(error.error.message)
+    );
   }
 }

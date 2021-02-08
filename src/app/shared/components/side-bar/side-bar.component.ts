@@ -1,5 +1,6 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -13,7 +14,8 @@ export class SideBarComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private route: Router,
-    private cdk: ChangeDetectorRef
+    private cdk: ChangeDetectorRef,
+    private authService: AuthService
   ) {
   }
 
@@ -32,6 +34,6 @@ export class SideBarComponent implements OnInit, AfterViewChecked {
   }
 
   logout(): void {
-    this.route.navigate(['/']);
+    this.authService.logoutUser();
   }
 }

@@ -9,6 +9,8 @@ import {ReportsComponent} from './reports/reports.component';
 import {ProductResolver} from '../core/resolver/product.resolver';
 import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
 import {UserResolver} from '../core/resolver/user.resolver';
+import {SalesBoxResolver} from '../core/resolver/sales-box.resolver';
+import {AllSalesResolver} from '../core/resolver/all-sales.resolver';
 
 const routes: Routes = [
   {
@@ -22,7 +24,10 @@ const routes: Routes = [
       },
       {
         path: 'caixa',
-        component: SalesBoxComponent
+        component: SalesBoxComponent,
+        resolve: {
+          data: SalesBoxResolver
+        }
       },
       {
         path: 'usuarios',
@@ -47,7 +52,10 @@ const routes: Routes = [
       },
       {
         path: 'relatorios',
-        component: ReportsComponent
+        component: ReportsComponent,
+        resolve: {
+          allSales: AllSalesResolver
+        }
       }
     ]
   }

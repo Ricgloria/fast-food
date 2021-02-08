@@ -4,15 +4,15 @@
       <h1 class="ft-22">Fast Food Sistema</h1>
     </div>
     <div class="col-12 form-group">
-      <label for="email">E-mail</label>
-      <input type="text" formControlName="email" id="email" class="form-control">
+      <label for="cpf">CPF</label>
+      <input type="text" formControlName="cpf" [mask]="mask.cpf" id="cpf" class="form-control">
     </div>
     <div class="col-12 form-group">
       <label for="password">Senha</label>
       <input type="password" formControlName="password" id="password" class="form-control">
     </div>
     <div class="col-12 d-flex justify-content-end">
-      <button class="btn-ripple btn-fast primary" routerLink="/admin">entrar</button>
+      <button (click)="send()" [disabled]="login.invalid" class="btn-ripple btn-fast primary">entrar</button>
     </div>
   </form>
 </div>

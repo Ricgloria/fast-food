@@ -38,15 +38,15 @@
             </select>
           </div>
         </ng-container>
-        <div class="col-12 d-flex justify-content-end">
+        <div class="col-12 d-flex justify-content-end flex-wrap">
           <ng-container *ngIf="isSee">
-            <button (click)="deleteProduct()" class="btn btn-outline-danger mr-2">Excluir</button>
-            <button (click)="seeState()" class="btn btn-outline-secondary mr-2">Cancelar visualização</button>
+            <button (click)="deleteProduct()" class="btn btn-outline-danger mr-2 mt-2">Excluir</button>
+            <button (click)="seeState()" class="btn btn-outline-secondary mr-2 mt-2">Cancelar visualização</button>
             <button (click)="editState()"
-                    class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+                    class="btn btn-outline-secondary mr-2 mt-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
           </ng-container>
           <button [disabled]="productForm.invalid || productForm.disabled || !productForm.dirty"
-                  (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple">Salvar
+                  (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple mt-2">Salvar
           </button>
         </div>
       </form>

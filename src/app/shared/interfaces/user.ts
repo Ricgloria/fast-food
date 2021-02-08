@@ -8,3 +8,8 @@ export interface User {
   address: string;
   status: number | boolean;
 }
+
+export interface Auth {
+  user: User;
+  token: string;
+}

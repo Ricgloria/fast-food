@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './core/login/login.component';
+import {LoginGuard} from './core/guards/login.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,10 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./portal/portal.module').then(m => m.PortalModule)
+    loadChildren: () => import('./portal/portal.module').then(m => m.PortalModule),
+    canActivate: [
+      LoginGuard
+    ]
   }
 ];
 

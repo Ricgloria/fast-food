@@ -204,6 +204,7 @@ body {
   display: flex;
   align-items: center;
   box-shadow: 0 3px 6px #00000029;
+
   .title {
     margin-bottom: 0;
     margin-left: 55px;
@@ -212,7 +213,15 @@ body {
   }
 }
 
-@media screen and (min-width: 1080px){
+input, select {
+  &.ng-invalid.ng-touched {
+    -webkit-box-shadow: 0 0 4px 1px rgba(255, 0, 0, .8);
+    -moz-box-shadow: 0 0 4px 1px rgba(255, 0, 0, .8);
+    box-shadow: 0 0 4px 1px rgba(255, 0, 0, .8);
+  }
+}
+
+@media screen and (min-width: 1080px) {
   .top-bar .title {
     margin-left: 15px;
   }

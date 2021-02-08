@@ -19,6 +19,10 @@ export class PaymentMethodService {
     return this.httpClient.get<PaymentMethod[]>(this.paymentMethod);
   }
 
+  public getAllActivePaymentMethods(): Observable<PaymentMethod[]> {
+    return this.httpClient.get<PaymentMethod[]>(`${this.paymentMethod}/sales`);
+  }
+
   public getPaymentMethodsById(id: number): Observable<PaymentMethod> {
     return this.httpClient.get<PaymentMethod>(`${this.paymentMethod}/${id}`);
   }

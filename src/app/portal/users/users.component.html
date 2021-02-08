@@ -14,7 +14,8 @@
         <ng-container *ngIf="isSee && isEdit">
           Editar
         </ng-container>
-        usuário</h2>
+        usuário
+      </h2>
     </div>
   </div>
   <div class="row">
@@ -60,13 +61,16 @@
           <label for="address">Endereço</label>
           <input formControlName="address" id="address" class="form-control" type="text">
         </div>
-        <div class="col-12 d-flex justify-content-end">
+        <div class="col-12 d-flex justify-content-end flex-wrap">
           <ng-container *ngIf="isSee">
-            <button (click)="deleteUser()" class="btn btn-outline-danger mr-2">Excluir</button>
-            <button (click)="seeState()" class="btn btn-outline-secondary mr-2">Cancelar visualização</button>
-            <button (click)="editState()" class="btn btn-outline-secondary mr-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+            <button (click)="deleteUser()" class="btn btn-outline-danger mr-2 mt-2">Excluir</button>
+            <button (click)="seeState()" class="btn btn-outline-secondary mr-2 mt-2">Cancelar visualização</button>
+            <button (click)="editState()"
+                    class="btn btn-outline-secondary mr-2 mt-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
           </ng-container>
-          <button [disabled]="userForm.invalid || userForm.disabled || !userForm.dirty" (click)="saveUser()" type="button" class="primary btn-fast btn-ripple">Salvar</button>
+          <button [disabled]="userForm.invalid || userForm.disabled || !userForm.dirty" (click)="saveUser()"
+                  type="button" class="primary btn-fast btn-ripple mt-2">Salvar
+          </button>
         </div>
       </form>
     </div>

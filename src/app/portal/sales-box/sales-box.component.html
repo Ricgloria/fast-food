@@ -1,1 +1,67 @@
-<p>sales-box works!</p>
+<div class="top-bar">
+  <h2 class="title">Caixa</h2>
+</div>
+<div class="container mt-3 pb-2">
+  <form [formGroup]="saleForm" style="height: 680px" class="row box pt-3 pb-3">
+    <div class="col-md-6 form-group">
+      <label for="products">Escolha:</label>
+      <select formControlName="id_product" class="custom-select form-control text-uppercase" id="products">
+        <option [value]="''">Selecione...</option>
+        <option
+          [value]="product.id_product" class="text-uppercase"
+          *ngFor="let product of saleBox?.products">
+          {{product.product_name}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-3 form-group">
+      <label for="amount">Quantidade:</label>
+      <input formControlName="amount" id="amount" min="1" value="1" class="form-control" type="number">
+    </div>
+    <div class="col-md-3 form-group d-flex align-items-end">
+      <button [disabled]="!saleForm.get('id_product')?.value" (click)="addProducts()" class="primary btn-fast btn-ripple">adicionar</button>
+    </div>
+    <div style="height: 425px" class="col-12 custom-scroll">
+      <div class="row">
+        <div class="col-12">
+          <div class="product-card" *ngFor="let product of sendProducts; let idx = index">
+            <span class="text-uppercase">{{product.product.product_name}}</span>
+            <span class="text-right">{{product.amount}} X</span>
+            <span class="text-right font-weight-bold">{{product.amount * product.product.product_value | currency: 'BRL'}}</span>
+            <span class="d-flex align-items-center justify-content-center">
+              <img (click)="deleteProduct(idx)" class="pointer" height="15" width="13" src="../../../assets/img/svg/Icon%20awesome-trash-alt.svg" alt="deletar">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <hr>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="method">Método de Pagamento:</label>
+          <select formControlName="id_payment_method" class="custom-select form-control text-uppercase" id="method">
+            <option [value]="''">Selecione...</option>
+            <option
+              [value]="method.id_payment_method" class="text-uppercase"
+              *ngFor="let method of saleBox?.paymentMethods">
+              {{method.description}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group d-flex align-items-end justify-content-end">
+          <label class="pl-0" style="font-size: 18px!important;">Total:
+            <span>{{totalValue() | currency: 'BRL'}}</span>
+          </label>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-6 d-flex justify-content-end">
+          <button [disabled]="saleForm.invalid || !sendProducts.length" (click)="sendSale()" class="primary btn-fast btn-lg pl-5 pr-5 btn-ripple">finalizar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
