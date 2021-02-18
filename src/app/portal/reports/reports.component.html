@@ -9,7 +9,7 @@
     <div class="col-12 box pt-3 pb-3">
       <div class="row">
         <div class="col-12">
-          <div class="table-responsible">
+          <div class="table-responsive">
             <table class="table table-hover">
               <thead class="thead-dark">
               <tr>
@@ -23,7 +23,7 @@
               <tr *ngFor="let sale of allSales | paginate: salesPag; let idx = index">
                 <td>{{sale?.name}}</td>
                 <td>{{sale?.sale_value | currency: 'BRL'}}</td>
-                <td>{{sale?.sale_date | date: 'dd/MM/YYYY hh:mm'}}</td>
+                <td>{{sale?.sale_date | date: 'dd/MM/YYYY H:mm'}}</td>
                 <td class="text-uppercase">{{sale?.description}}</td>
               </tr>
               </tbody>

@@ -13,6 +13,17 @@
   }
 }
 
+
+@media screen and (max-width: 768px){
+  .product-card {
+    grid-template-columns: 50% 15% 25% 10%;
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+
 .custom-scroll {
   overflow-y: auto;
   scrollbar-width: thin;

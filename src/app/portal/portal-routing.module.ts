@@ -20,7 +20,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'usuarios'
+        redirectTo: 'caixa'
       },
       {
         path: 'caixa',

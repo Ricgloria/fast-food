@@ -83,10 +83,14 @@ export class SalesBoxComponent implements OnInit {
     this.salesService.postSale(sendSale).subscribe(
       () => {
         this.toast.success('Venda realizada com sucesso');
-        this.sendProducts.splice(0);
-        this.createForm();
+        this.clearBox();
       },
       error => this.toast.error(error)
     );
+  }
+
+  clearBox(): void  {
+    this.sendProducts.splice(0);
+    this.createForm();
   }
 }
