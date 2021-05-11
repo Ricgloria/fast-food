@@ -13,6 +13,7 @@ import {NgxCurrencyModule} from 'ngx-currency';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { SalesBoxComponent } from './sales-box/sales-box.component';
 import { ReportsComponent } from './reports/reports.component';
+import { DeliverymanComponent } from './deliveryman/deliveryman.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ReportsComponent } from './reports/reports.component';
     ProductComponent,
     PaymentMethodComponent,
     SalesBoxComponent,
-    ReportsComponent
+    ReportsComponent,
+    DeliverymanComponent
   ],
     imports: [
         CommonModule,

@@ -11,6 +11,8 @@ import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
 import {UserResolver} from '../core/resolver/user.resolver';
 import {SalesBoxResolver} from '../core/resolver/sales-box.resolver';
 import {AllSalesResolver} from '../core/resolver/all-sales.resolver';
+import {DeliverymanComponent} from './deliveryman/deliveryman.component';
+import {DeliverymanResolver} from '../core/resolver/deliveryman.resolver';
 
 const routes: Routes = [
   {
@@ -34,6 +36,13 @@ const routes: Routes = [
         component: UsersComponent,
         resolve: {
           users: UserResolver
+        }
+      },
+      {
+        path: 'entregadores',
+        component: DeliverymanComponent,
+        resolve: {
+          deliveryman: DeliverymanResolver
         }
       },
       {
