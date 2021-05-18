@@ -15,22 +15,41 @@
       </select>
     </div>
     <div class="col-md-3 form-group">
-      <label for="amount">Quantidade:</label>
+      <label for="amount">Unidades:</label>
       <input formControlName="amount" id="amount" min="1" value="1" class="form-control" type="number">
     </div>
     <div class="col-md-3 form-group d-flex align-items-end">
-      <button [disabled]="!saleForm.get('id_product')?.value" (click)="addProducts()" class="primary btn-fast btn-ripple">adicionar</button>
+      <button [disabled]="!saleForm.get('id_product')?.value" (click)="addProducts()" class="primary btn-fast btn-ripple w-100">adicionar</button>
     </div>
-    <div style="height: 425px" class="col-12 custom-scroll">
+    <div class="col-12">
       <div class="row">
-        <div class="col-12">
+        <div style="height: 425px"  class="col-md-6 custom-scroll">
           <div class="product-card" *ngFor="let product of sendProducts; let idx = index">
             <span class="text-uppercase text-truncate">{{product.product.product_name}}</span>
-            <span class="text-right">{{product.amount}} X</span>
+            <span class="text-right">{{product.amount}} UN</span>
             <span class="text-right font-weight-bold">{{product.amount * product.product.product_value | currency: 'BRL'}}</span>
             <span class="d-flex align-items-center justify-content-center">
               <img (click)="deleteProduct(idx)" class="pointer" height="15" width="13" src="../../../assets/img/svg/Icon%20awesome-trash-alt.svg" alt="deletar">
             </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="is-delivery" class="mb-3">Delivery:</label>
+              <app-slider-button class="custom-slider" (change)="clearDeliveryData()" formControlName="is_delivery" checkedText="SIM" notCheckedText="NÃO" id="is-delivery"></app-slider-button>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="deliveryman">Entregador:</label>
+              <select formControlName="id_deliveryman" class="custom-select form-control" id="deliveryman">
+                <option value="">Selecione</option>
+                <option [value]="man.id_deliveryman" *ngFor="let man of saleBox?.deliveryman">{{man.name}}</option>
+              </select>
+            </div>
+            <div class="col-12 form-group">
+              <label for="delivery_address">Endereço:</label>
+              <textarea class="form-control" id="delivery_address" formControlName="delivery_address"></textarea>
+            </div>
           </div>
         </div>
       </div>

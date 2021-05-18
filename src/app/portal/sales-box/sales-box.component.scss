@@ -5,22 +5,25 @@
   padding: 5px;
   background: #F7F7F7;
   margin-top: 2px;
+
   span {
     font-size: 18px;
   }
+
   span:last-of-type {
     color: #707070;
   }
 }
 
-
-@media screen and (max-width: 768px){
-  .product-card {
-    grid-template-columns: 50% 15% 25% 10%;
-    span {
-      font-size: 14px;
-    }
+.custom-slider {
+  ::ng-deep.slider-container {
+    justify-content: flex-start !important;
   }
+}
+
+textarea {
+  resize: none;
+  height: 200px;
 }
 
 
@@ -41,4 +44,14 @@
 .custom-scroll::-webkit-scrollbar-thumb {
   background-color: #707070;
   border-radius: 3px;
+}
+
+@media screen and (max-width: 768px) {
+  .product-card {
+    grid-template-columns: 50% 15% 25% 10%;
+
+    span {
+      font-size: 14px;
+    }
+  }
 }

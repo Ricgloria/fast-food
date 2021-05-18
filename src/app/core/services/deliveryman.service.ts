@@ -19,6 +19,10 @@ export class DeliverymanService {
     return this.httpClient.get<Deliveryman[]>(this.deliveryman);
   }
 
+  public getAllActiveDeliveryman(): Observable<Deliveryman[]> {
+    return this.httpClient.get<Deliveryman[]>(`${this.deliveryman}/sales`);
+  }
+
   public getDeliverymanById(id: number): Observable<Deliveryman> {
     return this.httpClient.get<Deliveryman>(`${this.deliveryman}/${id}`);
   }

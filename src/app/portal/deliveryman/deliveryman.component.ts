@@ -88,7 +88,6 @@ export class DeliverymanComponent implements OnInit, OnDestroy {
       this.deliverymanForm = this.newFormGroupFactory();
       setTimeout( () => this.deliverymanForm.enable(), 200);
     }
-
   }
 
   editFormGroupFactory(deliveryman: Deliveryman): FormGroup {

@@ -37,7 +37,31 @@ export class SalesBoxComponent implements OnInit {
       id_product: [''],
       amount: [1],
       id_payment_method: ['', Validators.required],
+      is_delivery: [false],
+      delivery_address: [''],
+      id_deliveryman: ['']
     });
+    this.disableDeliveryFields();
+  }
+
+  disableDeliveryFields(): void {
+    this.saleForm.get('delivery_address')?.setValue('');
+    this.saleForm.get('id_deliveryman')?.setValue('');
+    this.saleForm.get('delivery_address')?.disable();
+    this.saleForm.get('id_deliveryman')?.disable();
+    this.saleForm.get('delivery_address')?.setValidators(null);
+    this.saleForm.get('delivery_address')?.updateValueAndValidity();
+    this.saleForm.get('id_deliveryman')?.setValidators(null);
+    this.saleForm.get('id_deliveryman')?.updateValueAndValidity();
+  }
+
+  enableDeliveryFields(): void {
+    this.saleForm.get('delivery_address')?.enable();
+    this.saleForm.get('id_deliveryman')?.enable();
+    this.saleForm.get('delivery_address')?.setValidators([Validators.required]);
+    this.saleForm.get('delivery_address')?.updateValueAndValidity();
+    this.saleForm.get('id_deliveryman')?.setValidators([Validators.required]);
+    this.saleForm.get('id_deliveryman')?.updateValueAndValidity();
   }
 
   getData(): void {
@@ -68,9 +92,21 @@ export class SalesBoxComponent implements OnInit {
     }, 0);
   }
 
+  clearDeliveryData(): void {
+    const value = this.saleForm.get('is_delivery')?.value;
+    if (!value) {
+      this.disableDeliveryFields();
+    } else {
+      this.enableDeliveryFields();
+    }
+  }
+
   sendSale(): void {
     const sendSale: SendSale = {
       id_payment_method: Number(this.saleForm?.get('id_payment_method')?.value),
+      is_delivery: Number(this.saleForm?.get('is_delivery')?.value),
+      delivery_address: this.saleForm?.get('delivery_address')?.value,
+      id_deliveryman: Number(this.saleForm?.get('id_deliveryman')?.value),
       sale_value: this.totalValue(),
       send_products: this.sendProducts.map(send => {
         return {
@@ -89,7 +125,7 @@ export class SalesBoxComponent implements OnInit {
     );
   }
 
-  clearBox(): void  {
+  clearBox(): void {
     this.sendProducts.splice(0);
     this.createForm();
   }
