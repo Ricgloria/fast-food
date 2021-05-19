@@ -1,29 +1,40 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import {Observable, throwError} from 'rxjs';
-import {Product} from '../../shared/interfaces/product';
+import {forkJoin, Observable, throwError} from 'rxjs';
+import {ProductAndDiscount} from '../../shared/interfaces/product';
 import {ProductService} from '../services/product.service';
 import {catchError, map} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+import {DiscountService} from '../services/discount.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductResolver implements Resolve<Product[]> {
+export class ProductResolver implements Resolve<ProductAndDiscount> {
 
   constructor(
     private productService: ProductService,
+    private discountService: DiscountService,
     private toast: ToastrService
   ) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product[]> | Promise<Product[]> | Product[] {
-    return this.productService.getAllProducts().pipe(map(
-      res => res)).pipe(catchError(
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<ProductAndDiscount> | Promise<ProductAndDiscount> | ProductAndDiscount {
+    return forkJoin([
+      this.productService.getAllProducts(),
+      this.discountService.getDiscount()
+    ]).pipe(map(
+      res => {
+        return {
+          products: res[0],
+          discount: res[1]
+        };
+      })).pipe(catchError(
       err => {
         this.toast.error(err.error.message);
         return throwError(err);

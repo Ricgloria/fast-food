@@ -7,6 +7,7 @@ import {debounceTime, take} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {Discount} from '../../shared/interfaces/discount';
 
 @Component({
   selector: 'app-product',
@@ -31,6 +32,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
+  discount: Discount = {} as Discount;
+
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -49,8 +52,9 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   getData(): void {
     this.activatedRoute.data.pipe(take(1)).subscribe(res => {
-      this.products = res.products;
-      this.filteredProducts = res.products;
+      this.products = res.products.products;
+      this.filteredProducts = res.products.products;
+      this.discount = res.products.discount;
       this.filter();
     });
   }

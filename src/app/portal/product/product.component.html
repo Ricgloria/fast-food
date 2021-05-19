@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <form [formGroup]="productForm" class="row box pt-3 pb-3 mb-3">
         <div class="col-lg-8 form-group">
           <label for="name">Nome:</label>
@@ -48,6 +48,17 @@
           <button [disabled]="productForm.invalid || productForm.disabled || !productForm.dirty"
                   (click)="saveProduct()" type="button" class="primary btn-fast btn-ripple mt-2">Salvar
           </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-3">
+      <form class="box row pt-3 pb-3 mb-3">
+        <div class="col-12 form-group">
+          <label for="discount">Desconto:</label>
+          <input type="text" class="form-control" id="discount" [value]="discount.discount_rate">
         </div>
       </form>
     </div>
