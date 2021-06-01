@@ -5,6 +5,7 @@ export interface Product {
   product_name: string;
   product_value: number;
   product_discount_value: number;
+  id_discount: number | null;
   status: number | boolean;
 }
 

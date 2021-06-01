@@ -55,10 +55,17 @@
     <div class="col-lg-1"></div>
 
     <div class="col-lg-3">
-      <form class="box row pt-3 pb-3 mb-3">
+      <form [formGroup]="discountForm" class="box row pt-3 pb-3 mb-3">
         <div class="col-12 form-group">
           <label for="discount">Desconto:</label>
-          <input type="text" class="form-control" id="discount" [value]="discount.discount_rate">
+          <input type="text" class="form-control" formControlName="discount_rate" currencyMask
+                 [options]="{prefix: '% '}" id="discount">
+        </div>
+        <div class="col-12 d-flex justify-content-end flex-wrap">
+            <button (click)="editDiscountFormState()" class="btn btn-outline-secondary mr-2 mt-2">{{discountFlag ? 'Cancelar edição' : 'Editar'}}</button>
+          <button [disabled]="discountForm.invalid || discountForm.disabled || !discountForm.dirty"
+                  (click)="saveDiscount()" type="button" class="primary btn-fast btn-ripple mt-2">Salvar
+          </button>
         </div>
       </form>
     </div>
@@ -79,8 +86,10 @@
         <table class="table table-hover">
           <thead class="thead-dark">
           <tr>
-            <th scope="col" style="width: 35%">Produto</th>
-            <th scope="col" style="width: 20%">Valor</th>
+            <th scope="col" style="width: 30%">Produto</th>
+            <th scope="col" style="width: 15%">Valor</th>
+            <th scope="col" style="width: 15%">Com desconto</th>
+            <th class="text-center" scope="col" style="width: 20%">Ativar desconto</th>
             <th class="text-center" scope="col" style="width: 20%">Status</th>
             <th scope="col" style="width: 5%"></th>
           </tr>
@@ -89,8 +98,14 @@
           <tr *ngFor="let product of filteredProducts | paginate: paginateConfig; let idx = index">
             <td class="text-uppercase">{{product?.product_name}}</td>
             <td>{{product?.product_value | currency: 'BRL'}}</td>
+            <td>{{product?.product_discount_value | currency: 'BRL'}}</td>
             <td>
-              <app-slider-button [ngModel]="!!product.status" (ngModelChange)="change(product, $event)"></app-slider-button>
+              <app-slider-button [ngModel]="!!product.id_discount"
+                                 (ngModelChange)="changeDiscount(product, $event)"></app-slider-button>
+            </td>
+            <td>
+              <app-slider-button [ngModel]="!!product.status"
+                                 (ngModelChange)="change(product, $event)"></app-slider-button>
             </td>
             <td class="text-right">
               <a (click)="onSeeClick(product)" class="pointer">
