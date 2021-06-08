@@ -59,7 +59,7 @@
         <div class="col-12 form-group">
           <label for="discount">Desconto:</label>
           <input type="text" class="form-control" formControlName="discount_rate" currencyMask
-                 [options]="{prefix: '% '}" id="discount">
+                 [options]="{prefix: '% ', nullable: false, max: 99.99, min: 0}" id="discount">
         </div>
         <div class="col-12 d-flex justify-content-end flex-wrap">
             <button (click)="editDiscountFormState()" class="btn btn-outline-secondary mr-2 mt-2">{{discountFlag ? 'Cancelar edição' : 'Editar'}}</button>
@@ -97,8 +97,8 @@
           <tbody>
           <tr *ngFor="let product of filteredProducts | paginate: paginateConfig; let idx = index">
             <td class="text-uppercase">{{product?.product_name}}</td>
-            <td>{{product?.product_value | currency: 'BRL'}}</td>
-            <td>{{product?.product_discount_value | currency: 'BRL'}}</td>
+            <td [ngStyle]="!product?.id_discount ? {'opacity': 1} : {'opacity': .5}">{{product?.product_value | currency: 'BRL'}}</td>
+            <td [ngStyle]="product?.id_discount ? {'opacity': 1} : {'opacity': .5}">{{product?.product_discount_value | currency: 'BRL'}}</td>
             <td>
               <app-slider-button [ngModel]="!!product.id_discount"
                                  (ngModelChange)="changeDiscount(product, $event)"></app-slider-button>

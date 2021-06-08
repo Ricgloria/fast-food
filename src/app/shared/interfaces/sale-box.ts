@@ -13,7 +13,7 @@ export interface SendSale {
   sale_value: number;
   is_delivery: boolean | number;
   delivery_address: string;
-  id_deliveryman: number;
+  id_deliveryman: number| null;
   send_products: SendCleanProduct[];
 }
 

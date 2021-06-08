@@ -27,7 +27,7 @@
           <div class="product-card" *ngFor="let product of sendProducts; let idx = index">
             <span class="text-uppercase text-truncate">{{product.product.product_name}}</span>
             <span class="text-right">{{product.amount}} UN</span>
-            <span class="text-right font-weight-bold">{{product.amount * product.product.product_value | currency: 'BRL'}}</span>
+            <span class="text-right font-weight-bold" [ngStyle]="product.product.id_discount ? {'color': 'blue'} : {'color': '#212121'}">{{product.amount * (product.product.id_discount ? product.product.product_discount_value : product.product.product_value) | currency: 'BRL'}}</span>
             <span class="d-flex align-items-center justify-content-center">
               <img (click)="deleteProduct(idx)" class="pointer" height="15" width="13" src="../../../assets/img/svg/Icon%20awesome-trash-alt.svg" alt="deletar">
             </span>

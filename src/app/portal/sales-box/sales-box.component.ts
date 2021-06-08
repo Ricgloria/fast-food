@@ -38,7 +38,7 @@ export class SalesBoxComponent implements OnInit {
       amount: [1],
       id_payment_method: ['', Validators.required],
       is_delivery: [false],
-      delivery_address: [''],
+      delivery_address: [null],
       id_deliveryman: ['']
     });
     this.disableDeliveryFields();
@@ -88,7 +88,8 @@ export class SalesBoxComponent implements OnInit {
 
   totalValue(): number {
     return this.sendProducts.reduce((sum, send) => {
-      return sum + (send.amount * send?.product.product_value);
+      return sum + (send.amount *
+        (send?.product?.id_discount ? send?.product.product_discount_value : send.product.product_value));
     }, 0);
   }
 
@@ -106,7 +107,7 @@ export class SalesBoxComponent implements OnInit {
       id_payment_method: Number(this.saleForm?.get('id_payment_method')?.value),
       is_delivery: Number(this.saleForm?.get('is_delivery')?.value),
       delivery_address: this.saleForm?.get('delivery_address')?.value,
-      id_deliveryman: Number(this.saleForm?.get('id_deliveryman')?.value),
+      id_deliveryman: Number(this.saleForm?.get('is_delivery')?.value) ? Number(this.saleForm?.get('id_deliveryman')?.value) : null,
       sale_value: this.totalValue(),
       send_products: this.sendProducts.map(send => {
         return {
