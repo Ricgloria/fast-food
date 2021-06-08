@@ -29,6 +29,10 @@
           <label for="value">Valor:</label>
           <input currencyMask formControlName="product_value" class="form-control" id="value" type="text">
         </div>
+        <div class="col-lg-12 form-group">
+          <label for="details">Detalhes:</label>
+          <textarea formControlName="details" class="form-control" id="details"></textarea>
+        </div>
         <ng-container *ngIf="isSee">
           <div class="col-lg-4 form-group">
             <label for="status">Status:</label>

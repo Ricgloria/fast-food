@@ -14,6 +14,7 @@ export interface SendSale {
   is_delivery: boolean | number;
   delivery_address: string;
   id_deliveryman: number| null;
+  note: string;
   send_products: SendCleanProduct[];
 }
 

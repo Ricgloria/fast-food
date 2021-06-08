@@ -114,6 +114,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       product_name: [product.product_name, Validators.required],
       product_value: [product.product_value, Validators.required],
       status: [product.status, Validators.required],
+      details: [product.details],
       id_discount: [product.id_discount]
     });
   }
@@ -122,6 +123,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     return this.formBuilder.group({
       product_name: ['', Validators.required],
       product_value: ['', Validators.required],
+      details: [''],
       status: [1]
     });
   }
