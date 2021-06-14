@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './core/login/login.component';
 import {LoginGuard} from './core/guards/login.guard';
 import {CustomerRequestComponent} from './customer/customer-request/customer-request.component';
+import {SalesBoxResolver} from './core/resolver/sales-box.resolver';
 
 const routes: Routes = [
   {
@@ -16,7 +17,10 @@ const routes: Routes = [
   },
   {
     path: 'faca-seu-pedido',
-    component: CustomerRequestComponent
+    component: CustomerRequestComponent,
+    resolve: {
+      data: SalesBoxResolver
+    }
   },
   {
     path: 'admin',
@@ -31,4 +35,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

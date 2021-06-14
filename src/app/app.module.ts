@@ -4,7 +4,7 @@ import {LOCALE_ID, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './core/login/login.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxMaskModule} from 'ngx-mask';
 import localePt from '@angular/common/locales/pt';
@@ -25,17 +25,18 @@ registerLocaleData(localePt, 'pt');
     LoginComponent,
     CustomerRequestComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    NgxPaginationModule,
-    HttpClientModule,
-    ToastrModule.forRoot(),
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    NgxMaskModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        NgxPaginationModule,
+        HttpClientModule,
+        ToastrModule.forRoot(),
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+        NgxMaskModule.forRoot(),
+        FormsModule
+    ],
   providers: [
     {
       provide: LOCALE_ID,

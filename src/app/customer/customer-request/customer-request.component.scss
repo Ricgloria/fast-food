@@ -6,3 +6,48 @@
   min-height: 100vh;
   background-color: rgba(33, 33, 33, 0.95);
 }
+
+.product-area {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  button {
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.custom-pagination {
+  ::ng-deep.ngx-pagination li.current {
+    color: #212121;
+  }
+
+  ::ng-deep.ngx-pagination li {
+    background-color: #F5F5F5;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+}
+
+select, option {
+  width: auto;
+  color: #212121;
+}
+
+svg {
+  vertical-align: text-bottom;
+  fill: #F5F5F5;
+}
