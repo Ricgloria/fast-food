@@ -3,7 +3,7 @@ import {take} from 'rxjs/operators';
 import {FormBuilder} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
-import {SaleBox, SendProduct} from '../../shared/interfaces/sale-box';
+import {SaleBox} from '../../shared/interfaces/sale-box';
 import {PaginationInstance} from 'ngx-pagination';
 import {Product} from '../../shared/interfaces/product';
 
@@ -16,8 +16,11 @@ export class CustomerRequestComponent implements OnInit {
 
   saleBox: SaleBox = {} as SaleBox;
   shoppingCart: Product[] = [];
-  selectElement = 'delivery';
+  whatsAppNumber = '12991123842';
+  salesType = '';
   details = '';
+  address = '';
+  paymentMethod = '';
   paginateConfig: PaginationInstance = {
     id: 'product',
     currentPage: 1,
@@ -39,6 +42,8 @@ export class CustomerRequestComponent implements OnInit {
     this.activatedRoute.data.pipe(take(1)).subscribe(
       res => {
         this.saleBox = res.data;
+        this.paymentMethod = this.saleBox.paymentMethods[0].description;
+        this.salesType = this.saleBox.salesType[0].sales_type_id.toString();
       }
     );
   }
@@ -59,9 +64,20 @@ export class CustomerRequestComponent implements OnInit {
 
   buildToRemove(): void {
     let message = '*Retirada ou consumir no local* \n *Pedidos*: \n';
-    this.shoppingCart.forEach( prod => message = `${message} ${prod.product_name} \n` );
+    this.shoppingCart.forEach(prod => message = `${message} ${prod.product_name} \n`);
     message = `${message} *Observações*: ${this.details}`;
+    this.openWhats(message);
+  }
+
+  buildDeliveryRemove(): void {
+    let message = '*Delivery* \n *Pedidos*: \n';
+    this.shoppingCart.forEach(prod => message = `${message} ${prod.product_name} \n`);
+    message = `${message} *Observações*: ${this.details} \n *Endereço*: ${this.address} \n *Forma de pagamento*: ${this.paymentMethod}`;
+    this.openWhats(message);
+  }
+
+  openWhats(message: string): void {
     message = window.encodeURIComponent(message);
-    window.open(`https://api.whatsapp.com/send?1=pt_BR&phone=5512991123842&text=${message}`, '_blank');
+    window.open(`https://web.whatsapp.com/send?1=pt_BR&phone=55${this.whatsAppNumber}&text=${message}`, '_blank');
   }
 }

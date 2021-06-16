@@ -42,12 +42,15 @@
   }
 }
 
-select, option {
-  width: auto;
+select, option, textarea {
   color: #212121;
 }
 
 svg {
   vertical-align: text-bottom;
   fill: #F5F5F5;
+}
+
+textarea {
+  resize: none;
 }

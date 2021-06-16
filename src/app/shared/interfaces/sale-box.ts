@@ -1,11 +1,13 @@
 import {Product} from './product';
 import {PaymentMethod} from './payment-method';
 import {Deliveryman} from './deliveryman';
+import {SalesType} from './sales-type';
 
 export interface SaleBox {
   products: Product[];
   paymentMethods: PaymentMethod[];
   deliveryman: Deliveryman[];
+  salesType: SalesType[];
 }
 
 export interface SendSale {
