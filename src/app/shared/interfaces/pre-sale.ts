@@ -6,5 +6,6 @@ export interface PreSale {
   phone: string;
   delivery_address: string;
   note: string;
-  products: string;
+  products: number[];
+  is_finished?: boolean | number;
 }
