@@ -31,7 +31,7 @@
             </ng-container>
           </div>
           <div class="col-3 d-flex justify-content-end">
-            <button (click)="addProducts(product)" title="adicionar ao carrinho" class="btn-fast btn-ripple btn-danger">
+            <button (click)="addProducts(product)" title="adicionar ao carrinho" class="btn-fast btn-ripple primary">
               +
             </button>
           </div>
@@ -63,22 +63,36 @@
       <div class="col-12">
         <p>
           <span class="ft-18 font-weight-bold">Total</span>
-          <span class="ml-3">{{totalValue() | currency: 'BRL'}} {{salesType === '1' ? ' + taxa de entrega' : ''}}</span>
+          <span class="ml-3">{{totalValue() | currency: 'BRL'}} {{preSale.sales_type_id.toString() === '1' ? ' + taxa de entrega' : ''}}</span>
         </p>
       </div>
       <ng-container  *ngIf="shoppingCart.length">
-        <div style="display: grid" class="col-md-4 form-group mt-3">
-          <label style="color: #F5F5F5" for="shopp-method">Selecione</label>
-          <select id="shopp-method" [(ngModel)]="salesType" class="form-control custom-select">
+        <div class="col-md-4 form-group mt-3">
+          <label for="shopp-method">Selecione</label>
+          <select id="shopp-method" [(ngModel)]="preSale.sales_type_id" class="form-control custom-select">
             <option [value]="salesType.sales_type_id" *ngFor="let salesType of saleBox.salesType">{{salesType.name}}</option>
           </select>
         </div>
+        <div class="col-md-4 form-group mt-3">
+          <label for="phone">Whats para contato</label>
+          <input class="form-control" id="phone" [mask]="getPhoneMask()" [(ngModel)]="preSale.phone">
+        </div>
         <div class="col-12"></div>
         <div class="col-md-4 form-group">
-          <label style="color: #F5F5F5">Observações</label>
-          <textarea [(ngModel)]="details" class="form-control"></textarea>
+          <label>Observações</label>
+          <textarea [(ngModel)]="preSale.note" class="form-control"></textarea>
         </div>
-        <div *ngIf="salesType !== '1'" class="col-12">
+        <div class="col-md-3 form-group">
+          <label for="payment">Forma de pagamento</label>
+          <select [(ngModel)]="preSale.id_payment_method" id="payment" class="form-control custom-select">
+            <option [value]="payment.id_payment_method" *ngFor="let payment of saleBox.paymentMethods">{{payment.description}}</option>
+          </select>
+        </div>
+        <div *ngIf="forceToNUmber(preSale.id_payment_method) === paymentMethodEnum.MONEY" class="col-md-3">
+          <label for="changes-for">Troco para</label>
+          <input type="text" currencyMask class="form-control" [(ngModel)]="changesFor" id="changes-for">
+        </div>
+        <div *ngIf="forceToNUmber(preSale.sales_type_id) !== salesTypeEnum.DELIVERY" class="col-12">
           <button (click)="buildToRemove()" class="btn-ripple btn-fast primary">
             Pedir e Retirar ou Consumir no local
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
@@ -87,19 +101,13 @@
             </svg>
           </button>
         </div>
-        <ng-container *ngIf="salesType === '1'">
+        <ng-container *ngIf="forceToNUmber(preSale.sales_type_id) === salesTypeEnum.DELIVERY">
           <div class="col-md-6 form-group">
-            <label style="color: #F5F5F5" for="address">Endereço</label>
-            <textarea [(ngModel)]="address" id="address" class="form-control"></textarea>
-          </div>
-          <div class="col-md-4 form-group">
-            <label style="color: #F5F5F5" for="payment">Forma de pagamento</label>
-            <select [(ngModel)]="paymentMethod" id="payment" class="form-control custom-select">
-              <option [value]="payment.description" *ngFor="let payment of saleBox.paymentMethods">{{payment.description}}</option>
-            </select>
+            <label for="address">Endereço</label>
+            <textarea [(ngModel)]="preSale.delivery_address" id="address" class="form-control"></textarea>
           </div>
           <div class="col-md-6 form-group d-flex align-items-end">
-            <button [disabled]="!address" (click)="buildDeliveryRemove()" class="btn-ripple btn-fast primary">
+            <button [disabled]="!preSale.delivery_address" (click)="buildDeliveryRemove()" class="btn-ripple btn-fast primary">
               Pedir e receber em casa
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                 <path

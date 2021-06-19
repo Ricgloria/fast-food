@@ -15,15 +15,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './core/interceptor/token.interceptor';
-import { CustomerRequestComponent } from './customer/customer-request/customer-request.component';
 
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    CustomerRequestComponent
+    LoginComponent
   ],
     imports: [
         BrowserModule,

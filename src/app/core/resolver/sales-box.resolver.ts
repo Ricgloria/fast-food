@@ -12,6 +12,7 @@ import {PaymentMethodService} from '../services/payment-method.service';
 import {catchError, map} from 'rxjs/operators';
 import {DeliverymanService} from '../services/deliveryman.service';
 import {SalesTypeService} from '../services/sales-type.service';
+import {ChatPhoneService} from '../services/chat-phone.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class SalesBoxResolver implements Resolve<SaleBox> {
     private paymentMethod: PaymentMethodService,
     private deliverymanService: DeliverymanService,
     private salesTypeService: SalesTypeService,
+    private chatPhone: ChatPhoneService,
     private toast: ToastrService
   ) {
   }
@@ -32,14 +34,16 @@ export class SalesBoxResolver implements Resolve<SaleBox> {
       this.productService.getAllActiveProducts(),
       this.paymentMethod.getAllActivePaymentMethods(),
       this.deliverymanService.getAllActiveDeliveryman(),
-      this.salesTypeService.getAllActiveSalesType()
+      this.salesTypeService.getAllActiveSalesType(),
+      this.chatPhone.getChatPhone()
     ]).pipe(map(
       res => {
         return {
           products: res[0],
           paymentMethods: res[1],
           deliveryman: res[2],
-          salesType: res[3]
+          salesType: res[3],
+          chatPhone: res[4]
         };
       })).pipe(catchError(
       err => {

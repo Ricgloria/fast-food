@@ -2,12 +2,14 @@ import {Product} from './product';
 import {PaymentMethod} from './payment-method';
 import {Deliveryman} from './deliveryman';
 import {SalesType} from './sales-type';
+import {ChatPhone} from './chat-phone';
 
 export interface SaleBox {
   products: Product[];
   paymentMethods: PaymentMethod[];
   deliveryman: Deliveryman[];
   salesType: SalesType[];
+  chatPhone: ChatPhone;
 }
 
 export interface SendSale {

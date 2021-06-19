@@ -2,10 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {take} from 'rxjs/operators';
 import {FormBuilder} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SaleBox} from '../../shared/interfaces/sale-box';
 import {PaginationInstance} from 'ngx-pagination';
 import {Product} from '../../shared/interfaces/product';
+import {PreSalesService} from '../../core/services/pre-sales.service';
+import {PreSale} from '../../shared/interfaces/pre-sale';
+import {PaymentMethod} from '../../shared/interfaces/payment-method';
+import {SalesTypeEnum} from '../../shared/enum/sales-type.enum';
+import {PaymentMethodEnum} from '../../shared/enum/payment-method.enum';
+import {mask} from '../../shared/helpers/mask.helper';
 
 @Component({
   selector: 'app-customer-request',
@@ -16,11 +22,23 @@ export class CustomerRequestComponent implements OnInit {
 
   saleBox: SaleBox = {} as SaleBox;
   shoppingCart: Product[] = [];
-  whatsAppNumber = '12991123842';
-  salesType = '';
-  details = '';
-  address = '';
-  paymentMethod = '';
+  changesFor = '';
+  mask = mask;
+  preSale: PreSale = {
+    id_chat_phone: 0,
+    delivery_address: '',
+    id_payment_method: 0,
+    note: '',
+    phone: '',
+    products: [],
+    sales_type_id: 0
+  };
+
+  salesTypeEnum = SalesTypeEnum;
+  paymentMethodEnum = PaymentMethodEnum;
+
+  whatsAppNumber = '';
+
   paginateConfig: PaginationInstance = {
     id: 'product',
     currentPage: 1,
@@ -31,6 +49,8 @@ export class CustomerRequestComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private preSalesService: PreSalesService,
+    private router: Router
   ) {
   }
 
@@ -42,8 +62,10 @@ export class CustomerRequestComponent implements OnInit {
     this.activatedRoute.data.pipe(take(1)).subscribe(
       res => {
         this.saleBox = res.data;
-        this.paymentMethod = this.saleBox.paymentMethods[0].description;
-        this.salesType = this.saleBox.salesType[0].sales_type_id.toString();
+        this.preSale.id_payment_method = (this.saleBox.paymentMethods[0].id_payment_method as number);
+        this.preSale.sales_type_id = this.saleBox.salesType[0].sales_type_id;
+        this.preSale.id_chat_phone = this.saleBox.chatPhone.id_chat_phone;
+        this.whatsAppNumber = this.saleBox.chatPhone.phone;
       }
     );
   }
@@ -64,20 +86,62 @@ export class CustomerRequestComponent implements OnInit {
 
   buildToRemove(): void {
     let message = '*Retirada ou consumir no local* \n *Pedidos*: \n';
-    this.shoppingCart.forEach(prod => message = `${message} ${prod.product_name} \n`);
-    message = `${message} *Observações*: ${this.details}`;
-    this.openWhats(message);
+    message = message + this.buildProductsMessageAndID();
+    message = `${message} *Observações*: ${this.preSale.note}`;
+    this.preSale.delivery_address = '';
+    this.sendPreSale(message);
   }
 
   buildDeliveryRemove(): void {
-    let message = '*Delivery* \n *Pedidos*: \n';
-    this.shoppingCart.forEach(prod => message = `${message} ${prod.product_name} \n`);
-    message = `${message} *Observações*: ${this.details} \n *Endereço*: ${this.address} \n *Forma de pagamento*: ${this.paymentMethod}`;
-    this.openWhats(message);
+    let message = '*Delivery*\n*Pedidos*: \n';
+    message = message + this.buildProductsMessageAndID();
+    message = `${message}\n*Observações*: ${this.preSale.note} \n*Endereço*: ${this.preSale.delivery_address} \n*Forma de pagamento*: ${this.getPaymentMethodDescription()?.description}`;
+    if (this.forceToNUmber(this.preSale.id_payment_method) === this.paymentMethodEnum.MONEY) {
+      message = `${message} \n *Troco para:* ${new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(Number(this.changesFor))}`;
+    }
+    this.sendPreSale(message);
+  }
+
+  sendPreSale(message: string): void {
+    this.preSalesService.postPreSale(this.preSale).pipe(take(1)).subscribe(
+      res => {
+        message = `*Número do pédido:* ${res.preSaleID}\n${message}`;
+        this.openWhats(message);
+        this.router.navigate(['/faca-seu-pedido/pedido-enviado', res.preSaleID]);
+      },
+      error => this.toast.error(error)
+    );
   }
 
   openWhats(message: string): void {
     message = window.encodeURIComponent(message);
     window.open(`https://web.whatsapp.com/send?1=pt_BR&phone=55${this.whatsAppNumber}&text=${message}`, '_blank');
+  }
+
+  getPaymentMethodDescription(): PaymentMethod | undefined {
+    return this.saleBox.paymentMethods.find(pay => pay.id_payment_method === this.forceToNUmber(this.preSale.id_payment_method));
+  }
+
+  forceToNUmber(value: number | string): number {
+    return Number(value);
+  }
+
+  buildProductsMessageAndID(): string {
+    let message = '';
+    this.preSale.products = [];
+    this.shoppingCart.forEach(prod => {
+      message = `${message} ${prod.product_name} \n`;
+      if (prod.id_product != null) {
+        this.preSale.products.push(prod.id_product);
+      }
+    });
+    return message;
+  }
+
+  getPhoneMask(): string {
+    return this.preSale.phone.length === 10 ? mask.phone : mask.cellphone;
   }
 }

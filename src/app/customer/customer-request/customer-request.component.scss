@@ -42,7 +42,7 @@
   }
 }
 
-select, option, textarea {
+select, option, textarea, input {
   color: #212121;
 }
 
@@ -53,4 +53,8 @@ svg {
 
 textarea {
   resize: none;
+}
+
+label {
+  color: #F5F5F5;
 }
