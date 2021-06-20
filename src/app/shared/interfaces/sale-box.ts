@@ -3,6 +3,7 @@ import {PaymentMethod} from './payment-method';
 import {Deliveryman} from './deliveryman';
 import {SalesType} from './sales-type';
 import {ChatPhone} from './chat-phone';
+import {ExpectedTime} from './expected-time';
 
 export interface SaleBox {
   products: Product[];
@@ -10,12 +11,13 @@ export interface SaleBox {
   deliveryman: Deliveryman[];
   salesType: SalesType[];
   chatPhone: ChatPhone;
+  expectedTimes: ExpectedTime[];
 }
 
 export interface SendSale {
   id_payment_method: number;
   sale_value: number;
-  is_delivery: boolean | number;
+  sales_type_id: number;
   delivery_address: string;
   id_deliveryman: number| null;
   note: string;

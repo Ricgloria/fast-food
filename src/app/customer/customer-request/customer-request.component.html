@@ -6,6 +6,10 @@
           FAST FOOD BURGUER
         </h1>
         <p>Faça seu pedido pelo WhatsApp</p>
+        <div class="d-flex flex-column">
+          <span>Tempo esperado médio Delivery: {{getExpectedTime(expectedTimeEnum.DELIVERY)}} minutos</span>
+          <span>Tempo esperado médio Retirada/Consumo no local: {{getExpectedTime(expectedTimeEnum.OTHERS)}} minutos</span>
+        </div>
       </div>
       <div class="col-md-6 col-lg-4">
         <img class="w-100 h-100" src="../../../assets/img/png/burger.png" alt="">

@@ -13,6 +13,8 @@ import {SalesBoxResolver} from '../core/resolver/sales-box.resolver';
 import {AllSalesResolver} from '../core/resolver/all-sales.resolver';
 import {DeliverymanComponent} from './deliveryman/deliveryman.component';
 import {DeliverymanResolver} from '../core/resolver/deliveryman.resolver';
+import {SalesTypeResolver} from '../core/resolver/sales-type.resolver';
+import {ChatPhoneResolver} from '../core/resolver/chat-phone.resolver';
 
 const routes: Routes = [
   {
@@ -56,7 +58,9 @@ const routes: Routes = [
         path: 'metodos-de-pagamento',
         component: PaymentMethodComponent,
         resolve: {
-          payments: PaymentMethodResolver
+          payments: PaymentMethodResolver,
+          salesType: SalesTypeResolver,
+          chatPhone: ChatPhoneResolver
         }
       },
       {

@@ -8,10 +8,10 @@ import {PaginationInstance} from 'ngx-pagination';
 import {Product} from '../../shared/interfaces/product';
 import {PreSalesService} from '../../core/services/pre-sales.service';
 import {PreSale} from '../../shared/interfaces/pre-sale';
-import {PaymentMethod} from '../../shared/interfaces/payment-method';
 import {SalesTypeEnum} from '../../shared/enum/sales-type.enum';
 import {PaymentMethodEnum} from '../../shared/enum/payment-method.enum';
 import {mask} from '../../shared/helpers/mask.helper';
+import {ExpectedTimeEnum} from '../../shared/enum/expected-time.enum';
 
 @Component({
   selector: 'app-customer-request',
@@ -36,6 +36,7 @@ export class CustomerRequestComponent implements OnInit {
 
   salesTypeEnum = SalesTypeEnum;
   paymentMethodEnum = PaymentMethodEnum;
+  expectedTimeEnum = ExpectedTimeEnum;
 
   whatsAppNumber = '';
 
@@ -85,19 +86,17 @@ export class CustomerRequestComponent implements OnInit {
   }
 
   buildToRemove(): void {
-    let message = '*Retirada ou consumir no local* \n *Pedidos*: \n';
-    message = message + this.buildProductsMessageAndID();
+    let message = this.buildProductsMessageAndID();
     message = `${message} *Observações*: ${this.preSale.note}`;
     this.preSale.delivery_address = '';
     this.sendPreSale(message);
   }
 
   buildDeliveryRemove(): void {
-    let message = '*Delivery*\n*Pedidos*: \n';
-    message = message + this.buildProductsMessageAndID();
-    message = `${message}\n*Observações*: ${this.preSale.note} \n*Endereço*: ${this.preSale.delivery_address} \n*Forma de pagamento*: ${this.getPaymentMethodDescription()?.description}`;
+    let message = this.buildProductsMessageAndID();
+    message = `${message}\n*Observações*: ${this.preSale.note} \n*Endereço*: ${this.preSale.delivery_address} \n*Forma de pagamento*: ${this.getPaymentMethodDescription()}`;
     if (this.forceToNUmber(this.preSale.id_payment_method) === this.paymentMethodEnum.MONEY) {
-      message = `${message} \n *Troco para:* ${new Intl.NumberFormat('pt-BR', {
+      message = `${message} \n*Troco para:* ${new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
       }).format(Number(this.changesFor))}`;
@@ -121,8 +120,9 @@ export class CustomerRequestComponent implements OnInit {
     window.open(`https://web.whatsapp.com/send?1=pt_BR&phone=55${this.whatsAppNumber}&text=${message}`, '_blank');
   }
 
-  getPaymentMethodDescription(): PaymentMethod | undefined {
-    return this.saleBox.paymentMethods.find(pay => pay.id_payment_method === this.forceToNUmber(this.preSale.id_payment_method));
+  getPaymentMethodDescription(): string | undefined {
+    return this.saleBox.paymentMethods.find(
+      pay => pay.id_payment_method === this.forceToNUmber(this.preSale.id_payment_method))?.description;
   }
 
   forceToNUmber(value: number | string): number {
@@ -130,7 +130,7 @@ export class CustomerRequestComponent implements OnInit {
   }
 
   buildProductsMessageAndID(): string {
-    let message = '';
+    let message = `*${this.getShopType()}*\n*Pedidos*: \n`;
     this.preSale.products = [];
     this.shoppingCart.forEach(prod => {
       message = `${message} ${prod.product_name} \n`;
@@ -143,5 +143,13 @@ export class CustomerRequestComponent implements OnInit {
 
   getPhoneMask(): string {
     return this.preSale.phone.length === 10 ? mask.phone : mask.cellphone;
+  }
+
+  getExpectedTime(id: number): string | undefined {
+    return this.saleBox.expectedTimes.find(ex => ex.id_expected_time === id)?.time;
+  }
+
+  getShopType(): string | undefined {
+    return this.saleBox.salesType.find(type => type.sales_type_id === this.forceToNUmber(this.preSale.sales_type_id))?.name;
   }
 }

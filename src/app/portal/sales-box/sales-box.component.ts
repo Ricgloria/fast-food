@@ -6,6 +6,10 @@ import {take} from 'rxjs/operators';
 import {SaleBox, SendCleanProduct, SendProduct, SendSale} from '../../shared/interfaces/sale-box';
 import {Product} from '../../shared/interfaces/product';
 import {SalesService} from '../../core/services/sales.service';
+import {SalesTypeEnum} from '../../shared/enum/sales-type.enum';
+import {ExpectedTime} from '../../shared/interfaces/expected-time';
+import {ExpectedTimeEnum} from '../../shared/enum/expected-time.enum';
+import {ExpectedTimeService} from '../../core/services/expected-time.service';
 
 @Component({
   selector: 'app-sales-box',
@@ -16,6 +20,11 @@ export class SalesBoxComponent implements OnInit {
 
   saleBox: SaleBox | undefined;
   sendProducts: SendProduct[] = [];
+  salesTypeEnum = SalesTypeEnum;
+  expectedTimeEnum = ExpectedTimeEnum;
+
+  deliveryTime!: ExpectedTime;
+  inPlaceTime!: ExpectedTime;
 
   saleForm: FormGroup = this.formBuilder.group({});
 
@@ -23,7 +32,8 @@ export class SalesBoxComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: ToastrService,
     private activatedRoute: ActivatedRoute,
-    private salesService: SalesService
+    private salesService: SalesService,
+    private expectedTimeService: ExpectedTimeService
   ) {
   }
 
@@ -37,12 +47,12 @@ export class SalesBoxComponent implements OnInit {
       id_product: [''],
       amount: [1],
       id_payment_method: ['', Validators.required],
-      is_delivery: [false],
+      sales_type_id: ['', Validators.required],
       delivery_address: [null],
       id_deliveryman: [''],
       note: ['']
     });
-    this.disableDeliveryFields();
+    setTimeout(() => this.disableDeliveryFields(), 150);
   }
 
   disableDeliveryFields(): void {
@@ -69,6 +79,10 @@ export class SalesBoxComponent implements OnInit {
     this.activatedRoute.data.pipe(take(1)).subscribe(
       res => {
         this.saleBox = res.data;
+        this.deliveryTime = (this.saleBox?.expectedTimes.find(
+          ex => ex.id_expected_time === this.expectedTimeEnum.DELIVERY) as ExpectedTime);
+        this.inPlaceTime = (this.saleBox?.expectedTimes.find(
+          ex => ex.id_expected_time === this.expectedTimeEnum.OTHERS) as ExpectedTime);
       }
     );
   }
@@ -95,8 +109,7 @@ export class SalesBoxComponent implements OnInit {
   }
 
   clearDeliveryData(): void {
-    const value = this.saleForm.get('is_delivery')?.value;
-    if (!value) {
+    if (Number(this.saleForm.get('sales_type_id')?.value) !== this.salesTypeEnum.DELIVERY) {
       this.disableDeliveryFields();
     } else {
       this.enableDeliveryFields();
@@ -105,11 +118,11 @@ export class SalesBoxComponent implements OnInit {
 
   sendSale(): void {
     const sendSale: SendSale = {
-      id_payment_method: Number(this.saleForm?.get('id_payment_method')?.value),
-      is_delivery: Number(this.saleForm?.get('is_delivery')?.value),
-      delivery_address: this.saleForm?.get('delivery_address')?.value,
-      id_deliveryman: Number(this.saleForm?.get('is_delivery')?.value) ? Number(this.saleForm?.get('id_deliveryman')?.value) : null,
-      note: this.saleForm?.get('note')?.value,
+      id_payment_method: this.saleForm?.get('id_payment_method')?.value,
+      sales_type_id: this.saleForm?.get('sales_type_id')?.value,
+      delivery_address: this.saleForm?.get('delivery_address')?.value || null,
+      id_deliveryman: this.saleForm?.get('id_deliveryman')?.value || null,
+      note: this.saleForm?.get('note')?.value || null,
       sale_value: this.totalValue(),
       send_products: this.sendProducts.map(send => {
         return {
@@ -131,5 +144,12 @@ export class SalesBoxComponent implements OnInit {
   clearBox(): void {
     this.sendProducts.splice(0);
     this.createForm();
+  }
+
+  changeTime(time: ExpectedTime): void {
+    this.expectedTimeService.patchExpectedTime(time.id_expected_time, time.time).pipe(take(1)).subscribe(
+      () => this.toast.success('Tempo atualizado com sucesso'),
+      error => this.toast.error(error)
+    );
   }
 }

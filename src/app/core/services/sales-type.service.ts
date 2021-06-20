@@ -24,7 +24,7 @@ export class SalesTypeService {
     return this.httpClient.get<SalesType[]>(`${this.sales}/sales`);
   }
 
-  public patchStatusSaleType(id: number, status: boolean): Observable<any> {
+  public patchStatusSaleType(id: number, status: boolean | number): Observable<any> {
     return this.httpClient.patch(`${this.sales}/${id}`, {status});
   }
 }
