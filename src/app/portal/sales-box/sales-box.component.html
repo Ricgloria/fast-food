@@ -4,14 +4,30 @@
 <div class="container mt-3 pb-2">
 
   <div class="row box pt-3 pb-3">
-    <div class="col-lg-6"></div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3 form-group">
+      <label>Buscar pré venda</label>
+      <input [(ngModel)]="preSale" type="number" placeholder="Insira o numero do pedido"  class="form-control">
+      <button (click)="getPreSale()" [disabled]="!preSale" class="btn-fast btn-ripple primary mt-3 w-100">
+        Buscar
+      </button>
+    </div>
     <div class="col-lg-3 form-group">
       <label>Tempo médio delivery (minutos)</label>
-      <input (keyup.enter)="changeTime(deliveryTime)" [(ngModel)]="deliveryTime.time" type="number" class="form-control">
+      <input [(ngModel)]="deliveryTime.time" type="number" class="form-control">
+      <button
+        (click)="changeTime(deliveryTime)" [disabled]="!deliveryTime.time"
+        class="btn-fast btn-ripple primary mt-3 w-100">Salvar
+      </button>
     </div>
     <div class="col-lg-3 form-group">
       <label>Tempo médio retirada/local (minutos)</label>
-      <input (keyup.enter)="changeTime(inPlaceTime)" [(ngModel)]="inPlaceTime.time" type="number" class="form-control">
+      <input [(ngModel)]="inPlaceTime.time" type="number" class="form-control">
+      <button
+        (click)="changeTime(inPlaceTime)" [disabled]="!inPlaceTime.time"
+        class="btn-fast btn-ripple primary mt-3 w-100">Salvar
+      </button>
+
     </div>
   </div>
 
@@ -32,17 +48,21 @@
       <input formControlName="amount" id="amount" min="1" value="1" class="form-control" type="number">
     </div>
     <div class="col-md-3 form-group d-flex align-items-end">
-      <button [disabled]="!saleForm.get('id_product')?.value" (click)="addProducts()" class="primary btn-fast btn-ripple w-100">adicionar</button>
+      <button [disabled]="!saleForm.get('id_product')?.value" (click)="addProducts()"
+              class="primary btn-fast btn-ripple w-100">adicionar
+      </button>
     </div>
     <div class="col-12">
       <div class="row">
-        <div style="height: 425px"  class="col-md-6 custom-scroll">
+        <div style="height: 425px" class="col-md-6 custom-scroll">
           <div class="product-card" *ngFor="let product of sendProducts; let idx = index">
             <span class="text-uppercase text-truncate">{{product.product.product_name}}</span>
             <span class="text-right">{{product.amount}} UN</span>
-            <span class="text-right font-weight-bold" [ngStyle]="product.product.id_discount ? {'color': '#1167B1'} : {'color': '#212121'}">{{product.amount * (product.product.id_discount ? product.product.product_discount_value : product.product.product_value) | currency: 'BRL'}}</span>
+            <span class="text-right font-weight-bold"
+                  [ngStyle]="product.product.id_discount ? {'color': '#1167B1'} : {'color': '#212121'}">{{product.amount * (product.product.id_discount ? product.product.product_discount_value : product.product.product_value) | currency: 'BRL'}}</span>
             <span class="d-flex align-items-center justify-content-center">
-              <img (click)="deleteProduct(idx)" class="pointer" height="15" width="13" src="../../../assets/img/svg/Icon%20awesome-trash-alt.svg" alt="deletar">
+              <img (click)="deleteProduct(idx)" class="pointer" height="15" width="13"
+                   src="../../../assets/img/svg/Icon%20awesome-trash-alt.svg" alt="deletar">
             </span>
           </div>
         </div>
@@ -50,7 +70,8 @@
           <div class="row">
             <div class="col-md-6 form-group">
               <label for="sale-type">Tipo de venda:</label>
-              <select (change)="clearDeliveryData()" class="form-control custom-select" id="sale-type" formControlName="sales_type_id">
+              <select (change)="clearDeliveryData()" class="form-control custom-select" id="sale-type"
+                      formControlName="sales_type_id">
                 <option value="" selected>Selecione</option>
                 <option [value]="type.sales_type_id" *ngFor="let type of saleBox?.salesType">{{type.name}}</option>
               </select>
@@ -104,7 +125,9 @@
           <button (click)="clearBox()" class="btn btn-ripple btn-outline-danger">cancelar venda</button>
         </div>
         <div class="col-md-6 mt-3 mt-md-0 d-flex justify-content-end">
-          <button [disabled]="saleForm.invalid || !sendProducts.length" (click)="sendSale()" class="primary btn-fast btn-lg pl-5 pr-5 btn-ripple">finalizar</button>
+          <button [disabled]="saleForm.invalid || !sendProducts.length" (click)="sendSale()"
+                  class="primary btn-fast btn-lg pl-5 pr-5 btn-ripple">finalizar
+          </button>
         </div>
       </div>
     </div>

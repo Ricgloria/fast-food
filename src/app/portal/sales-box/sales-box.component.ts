@@ -10,6 +10,8 @@ import {SalesTypeEnum} from '../../shared/enum/sales-type.enum';
 import {ExpectedTime} from '../../shared/interfaces/expected-time';
 import {ExpectedTimeEnum} from '../../shared/enum/expected-time.enum';
 import {ExpectedTimeService} from '../../core/services/expected-time.service';
+import {PreSalesService} from '../../core/services/pre-sales.service';
+import {PreSale} from '../../shared/interfaces/pre-sale';
 
 @Component({
   selector: 'app-sales-box',
@@ -25,6 +27,7 @@ export class SalesBoxComponent implements OnInit {
 
   deliveryTime!: ExpectedTime;
   inPlaceTime!: ExpectedTime;
+  preSale = '';
 
   saleForm: FormGroup = this.formBuilder.group({});
 
@@ -33,7 +36,8 @@ export class SalesBoxComponent implements OnInit {
     private toast: ToastrService,
     private activatedRoute: ActivatedRoute,
     private salesService: SalesService,
-    private expectedTimeService: ExpectedTimeService
+    private expectedTimeService: ExpectedTimeService,
+    private preSalesService: PreSalesService
   ) {
   }
 
@@ -42,17 +46,21 @@ export class SalesBoxComponent implements OnInit {
     this.getData();
   }
 
-  createForm(): void {
+  createForm(preSale?: PreSale): void {
     this.saleForm = this.formBuilder.group({
+      id_sale: [preSale?.id_sale || ''],
       id_product: [''],
       amount: [1],
-      id_payment_method: ['', Validators.required],
-      sales_type_id: ['', Validators.required],
-      delivery_address: [null],
+      id_payment_method: [preSale?.id_payment_method || '', Validators.required],
+      sales_type_id: [preSale?.sales_type_id || '', Validators.required],
+      delivery_address: [preSale?.delivery_address || null],
       id_deliveryman: [''],
-      note: ['']
+      note: [preSale?.note || '']
     });
-    setTimeout(() => this.disableDeliveryFields(), 150);
+
+    setTimeout(() => {
+      this.clearDeliveryData();
+    }, 150);
   }
 
   disableDeliveryFields(): void {
@@ -135,13 +143,18 @@ export class SalesBoxComponent implements OnInit {
     this.salesService.postSale(sendSale).subscribe(
       () => {
         this.toast.success('Venda realizada com sucesso');
-        this.clearBox();
+        if (this.saleForm?.get('id_sale')?.value) {
+          this.finalizePreSale(this.saleForm?.get('id_sale')?.value);
+        } else {
+          this.clearBox();
+        }
       },
-      error => this.toast.error(error)
+      error => this.toast.error(error.error.message)
     );
   }
 
   clearBox(): void {
+    this.preSale = '';
     this.sendProducts.splice(0);
     this.createForm();
   }
@@ -150,6 +163,41 @@ export class SalesBoxComponent implements OnInit {
     this.expectedTimeService.patchExpectedTime(time.id_expected_time, time.time).pipe(take(1)).subscribe(
       () => this.toast.success('Tempo atualizado com sucesso'),
       error => this.toast.error(error)
+    );
+  }
+
+  getPreSale(): void {
+    this.sendProducts.splice(0);
+    this.createForm();
+    this.preSalesService.getActivePreSaleById(Number(this.preSale)).pipe(take(1)).subscribe(
+      res => {
+        this.createForm(res);
+        this.addProductsForId(res.products);
+      },
+      error => this.toast.error(error.error.message)
+    );
+  }
+
+  addProductsForId(productsId: number[]): void {
+    productsId.forEach(id => {
+      const send: SendProduct = {
+        amount: 1,
+        product: (this.saleBox?.products.find(product => product.id_product === id) as Product)
+      };
+      this.sendProducts.push(send);
+    });
+  }
+
+  finalizePreSale(id: number | string): void {
+    this.preSalesService.patchFinishPreSale(id).pipe(take(1)).subscribe(
+      () => {
+        this.clearBox();
+        this.toast.success('Pré venda finalizada com sucesso');
+      },
+      error => {
+        this.toast.error(error.error.message);
+        this.clearBox();
+      }
     );
   }
 }

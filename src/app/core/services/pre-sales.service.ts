@@ -32,7 +32,7 @@ export class PreSalesService {
     return this.httpClient.post<PreSaleId>(this.preSales, preSale);
   }
 
-  public patchFinishPreSale(id: number): Observable<any> {
+  public patchFinishPreSale(id: number | string): Observable<any> {
     return this.httpClient.patch<any>(`${this.preSales}/${id}`, {});
   }
 }
