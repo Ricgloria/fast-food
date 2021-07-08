@@ -2,7 +2,152 @@
   <h2 class="title">Relatórios</h2>
 </div>
 <div class="container mt-3 pb-2">
+
   <div class="row">
+    <div class="col-md-6 mt-3">
+      <div class="row mr-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Tipos de venda pelo Cardápio</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="preSalesTypeChart.options"
+                      [data]="preSalesTypeChart.data"
+                      [labels]="preSalesTypeChart.labels"
+                      [chartType]="preSalesTypeChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row ml-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Métodos de pagamento pelo Cardápio</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="preSalesPaymentChart.options"
+                      [data]="preSalesPaymentChart.data"
+                      [labels]="preSalesPaymentChart.labels"
+                      [chartType]="preSalesPaymentChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row mr-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Conversão de vendas do Cardápio</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="preSalesConversion.options"
+                      [data]="preSalesConversion.data"
+                      [labels]="preSalesConversion.labels"
+                      [chartType]="preSalesConversion.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row ml-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Vendas por usuário</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+
+                      [options]="salesUsersChart.options"
+                      [data]="salesUsersChart.data"
+                      [labels]="salesUsersChart.labels"
+                      [chartType]="salesUsersChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row mr-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Entregas por Entregadores</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="salesDeliverymanChart.options"
+                      [data]="salesDeliverymanChart.data"
+                      [labels]="salesDeliverymanChart.labels"
+                      [chartType]="salesDeliverymanChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row ml-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Métodos de Pagamento de Vendas Finalizadas</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="salesPaymentMethodChart.options"
+                      [data]="salesPaymentMethodChart.data"
+                      [labels]="salesPaymentMethodChart.labels"
+                      [chartType]="salesPaymentMethodChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row mr-md-0">
+        <div class="col-12 p-0">
+          <h2 class="titles">Tipos de venda finalizadas</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="salesTypeChart.options"
+                      [data]="salesTypeChart.data"
+                      [labels]="salesTypeChart.labels"
+                      [chartType]="salesTypeChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mt-3">
     <div class="col-12 p-0">
       <h2 class="titles">Todas as vendas</h2>
     </div>

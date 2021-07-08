@@ -184,6 +184,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     const discountValue = this.discountForm.getRawValue();
     this.discountService.putDiscount(discountValue).pipe(take(1)).subscribe(res => {
       this.discount = res;
+      this.toast.success('Desconto atualizado com sucesso');
       this.editDiscountFormState();
       this.getProducts();
     }, error => this.toast.error(error));

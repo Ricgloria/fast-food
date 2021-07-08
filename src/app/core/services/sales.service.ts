@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SendSale} from '../../shared/interfaces/sale-box';
+import {SalesReport, SendSale} from '../../shared/interfaces/sale-box';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,9 @@ export class SalesService {
 
   public postSale(sale: SendSale): Observable<any> {
     return this.httpClient.post<any>(`${this.sales}`, sale);
+  }
+
+  public getAllSalesReports(): Observable<SalesReport> {
+    return this.httpClient.get<SalesReport>(`${this.sales}/reports`);
   }
 }

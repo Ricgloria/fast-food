@@ -62,8 +62,9 @@
       <form [formGroup]="discountForm" class="box row pt-3 pb-3 mb-3">
         <div class="col-12 form-group">
           <label for="discount">Desconto:</label>
-          <input type="text" class="form-control" formControlName="discount_rate" currencyMask
-                 [options]="{prefix: '% ', nullable: false, max: 99.99, min: 0}" id="discount">
+          <input type="text" class="form-control" formControlName="discount_rate"
+                 currencyMask
+                 [options]="{suffix: ' %', prefix: '' , nullable: false, max: 99.99, min: 0}" id="discount">
         </div>
         <div class="col-12 d-flex justify-content-end flex-wrap">
             <button (click)="editDiscountFormState()" class="btn btn-outline-secondary mr-2 mt-2">{{discountFlag ? 'Cancelar edição' : 'Editar'}}</button>

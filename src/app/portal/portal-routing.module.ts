@@ -10,7 +10,7 @@ import {ProductResolver} from '../core/resolver/product.resolver';
 import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
 import {UserResolver} from '../core/resolver/user.resolver';
 import {SalesBoxResolver} from '../core/resolver/sales-box.resolver';
-import {AllSalesResolver} from '../core/resolver/all-sales.resolver';
+import {ReportsResolver} from '../core/resolver/reports.resolver';
 import {DeliverymanComponent} from './deliveryman/deliveryman.component';
 import {DeliverymanResolver} from '../core/resolver/deliveryman.resolver';
 import {SalesTypeResolver} from '../core/resolver/sales-type.resolver';
@@ -67,7 +67,7 @@ const routes: Routes = [
         path: 'relatorios',
         component: ReportsComponent,
         resolve: {
-          allSales: AllSalesResolver
+          reports: ReportsResolver
         }
       }
     ]

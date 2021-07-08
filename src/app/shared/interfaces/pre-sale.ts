@@ -1,3 +1,5 @@
+import {ReportBasis} from './report-basis';
+
 export interface PreSale {
   id_sale?: number;
   sale_date?: string;
@@ -14,3 +16,10 @@ export interface PreSale {
 export interface PreSaleId {
   preSaleID: number;
 }
+
+export interface PreSalesReport {
+  status: ReportBasis[];
+  salesType: ReportBasis[];
+  paymentMethods: ReportBasis[];
+}
+

@@ -15,6 +15,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './core/interceptor/token.interceptor';
+import {ChartsModule} from 'ng2-charts';
 
 registerLocaleData(localePt, 'pt');
 
@@ -23,18 +24,19 @@ registerLocaleData(localePt, 'pt');
     AppComponent,
     LoginComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        NgxPaginationModule,
-        HttpClientModule,
-        ToastrModule.forRoot(),
-        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-        NgxMaskModule.forRoot(),
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    NgxMaskModule.forRoot(),
+    FormsModule,
+    ChartsModule
+  ],
   providers: [
     {
       provide: LOCALE_ID,

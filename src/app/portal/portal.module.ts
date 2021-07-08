@@ -14,6 +14,7 @@ import { PaymentMethodComponent } from './payment-method/payment-method.componen
 import { SalesBoxComponent } from './sales-box/sales-box.component';
 import { ReportsComponent } from './reports/reports.component';
 import { DeliverymanComponent } from './deliveryman/deliveryman.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -26,16 +27,17 @@ import { DeliverymanComponent } from './deliveryman/deliveryman.component';
     ReportsComponent,
     DeliverymanComponent
   ],
-    imports: [
-        CommonModule,
-        PortalRoutingModule,
-        SharedModule,
-        NgxPaginationModule,
-        NgxMaskModule,
-        ReactiveFormsModule,
-        NgxCurrencyModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    PortalRoutingModule,
+    SharedModule,
+    NgxPaginationModule,
+    NgxMaskModule,
+    ReactiveFormsModule,
+    NgxCurrencyModule,
+    FormsModule,
+    ChartsModule
+  ],
   bootstrap: [
     PortalContainerComponent
   ]

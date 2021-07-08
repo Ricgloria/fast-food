@@ -4,6 +4,7 @@ import {Deliveryman} from './deliveryman';
 import {SalesType} from './sales-type';
 import {ChatPhone} from './chat-phone';
 import {ExpectedTime} from './expected-time';
+import {ReportBasis} from './report-basis';
 
 export interface SaleBox {
   products: Product[];
@@ -19,7 +20,7 @@ export interface SendSale {
   sale_value: number;
   sales_type_id: number;
   delivery_address: string;
-  id_deliveryman: number| null;
+  id_deliveryman: number | null;
   note: string;
   send_products: SendCleanProduct[];
 }
@@ -40,5 +41,14 @@ export interface Sale {
   sale_value: string;
   name: string;
   description: string;
+}
+
+export interface SalesReport {
+  total: number;
+  salesType: ReportBasis[];
+  paymentMethods: ReportBasis[];
+  users: ReportBasis[];
+  deliverymen: ReportBasis[];
+  itemsSale: ReportBasis[];
 }
 
