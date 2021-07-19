@@ -21,6 +21,7 @@
     "@angular/router": "~11.0.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-labels": "^1.1.0",
     "ng2-charts": "^2.4.3",
     "ngx-currency": "^2.5.2",
     "ngx-mask": "^11.1.4",

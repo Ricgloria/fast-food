@@ -73,7 +73,6 @@
           <div class="row">
             <div class="col-12">
               <canvas baseChart
-
                       [options]="salesUsersChart.options"
                       [data]="salesUsersChart.data"
                       [labels]="salesUsersChart.labels"
@@ -126,11 +125,11 @@
     </div>
 
     <div class="col-md-6 mt-3">
-      <div class="row mr-md-0">
+      <div class="row mr-md-0 h-100">
         <div class="col-12 p-0">
           <h2 class="titles">Tipos de venda finalizadas</h2>
         </div>
-        <div class="col-12 box pt-3 pb-3">
+        <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">
           <div class="row">
             <div class="col-12">
               <canvas baseChart
@@ -138,6 +137,65 @@
                       [data]="salesTypeChart.data"
                       [labels]="salesTypeChart.labels"
                       [chartType]="salesTypeChart.chartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="row ml-md-0 h-100">
+        <div class="col-12 p-0">
+          <h2 class="titles">Quantidade total de vendas por produto</h2>
+        </div>
+        <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12 product-report" *ngFor="let products of allSalesProducts | paginate: productSales">
+              <div class="product-report__header">
+                <span>{{products.name}}</span>
+                <span>{{products.total}}</span>
+              </div>
+              <div class="product-report__chart">
+                <span [style.width.%]="getPercentage(products.total)">
+                </span>
+                {{getPercentage(products.total).toString().substring(0, getPercentage(products.total).toString().indexOf('.') + 3).replace('.', ',')}}
+                %
+              </div>
+            </div>
+            <div class="col-12 mt-2">
+              <pagination-controls
+                id="productSales" (pageChange)="productSales.currentPage = $event"
+                class="custom-pagination">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3">
+      <div class="row">
+        <div class="col-12 p-0">
+          <h2 class="titles">Fluxo de caixa</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="sales-box">Selecione Período</label>
+              <select (change)="changeLineChart()" [(ngModel)]="salesBoxControl" class="form-control custom-select" id="sales-box">
+                <option [value]="salesBoxControlEnum.SEVEN_DAYS">Sete dias</option>
+                <option [value]="salesBoxControlEnum.LAST_MONTH">Último Mês</option>
+                <option [value]="salesBoxControlEnum.LAST_SIX_MONTH">Seis Meses</option>
+                <option [value]="salesBoxControlEnum.FULL_TIME">Tudo</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <canvas baseChart
+                      [options]="saleBoxChart.options"
+                      [datasets]="saleBoxChart.lineChartData"
+                      [labels]="saleBoxChart.labels"
+                      [chartType]="saleBoxChart.chartType">
               </canvas>
             </div>
           </div>

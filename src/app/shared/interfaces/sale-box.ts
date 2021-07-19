@@ -50,5 +50,9 @@ export interface SalesReport {
   users: ReportBasis[];
   deliverymen: ReportBasis[];
   itemsSale: ReportBasis[];
+  lastMonth: ReportBasis[];
+  lastSevenDays: ReportBasis[];
+  sixMonth: ReportBasis[];
+  allSales: ReportBasis[];
 }
 

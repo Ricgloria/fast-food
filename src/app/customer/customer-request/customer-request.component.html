@@ -8,7 +8,8 @@
         <p>Faça seu pedido pelo WhatsApp</p>
         <div class="d-flex flex-column">
           <span>Tempo esperado médio Delivery: {{getExpectedTime(expectedTimeEnum.DELIVERY)}} minutos</span>
-          <span>Tempo esperado médio Retirada/Consumo no local: {{getExpectedTime(expectedTimeEnum.OTHERS)}} minutos</span>
+          <span>Tempo esperado médio Retirada/Consumo no local: {{getExpectedTime(expectedTimeEnum.OTHERS)}}
+            minutos</span>
         </div>
       </div>
       <div class="col-md-6 col-lg-4">
@@ -36,7 +37,9 @@
           </div>
           <div class="col-3 d-flex justify-content-end">
             <button (click)="addProducts(product)" title="adicionar ao carrinho" class="btn-fast btn-ripple primary">
-              +
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20" height="20" viewBox="0 0 24 24">
+                <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -67,14 +70,16 @@
       <div class="col-12">
         <p>
           <span class="ft-18 font-weight-bold">Total</span>
-          <span class="ml-3">{{totalValue() | currency: 'BRL'}} {{preSale.sales_type_id.toString() === '1' ? ' + taxa de entrega' : ''}}</span>
+          <span
+            class="ml-3">{{totalValue() | currency: 'BRL'}} {{preSale.sales_type_id.toString() === '1' ? ' + taxa de entrega' : ''}}</span>
         </p>
       </div>
-      <ng-container  *ngIf="shoppingCart.length">
+      <ng-container *ngIf="shoppingCart.length">
         <div class="col-md-4 form-group mt-3">
           <label for="shopp-method">Selecione</label>
           <select id="shopp-method" [(ngModel)]="preSale.sales_type_id" class="form-control custom-select">
-            <option [value]="salesType.sales_type_id" *ngFor="let salesType of saleBox.salesType">{{salesType.name}}</option>
+            <option [value]="salesType.sales_type_id"
+                    *ngFor="let salesType of saleBox.salesType">{{salesType.name}}</option>
           </select>
         </div>
         <div class="col-md-4 form-group mt-3">
@@ -89,7 +94,8 @@
         <div class="col-md-3 form-group">
           <label for="payment">Forma de pagamento</label>
           <select [(ngModel)]="preSale.id_payment_method" id="payment" class="form-control custom-select">
-            <option [value]="payment.id_payment_method" *ngFor="let payment of saleBox.paymentMethods">{{payment.description}}</option>
+            <option [value]="payment.id_payment_method"
+                    *ngFor="let payment of saleBox.paymentMethods">{{payment.description}}</option>
           </select>
         </div>
         <div *ngIf="forceToNUmber(preSale.id_payment_method) === paymentMethodEnum.MONEY" class="col-md-3">
@@ -111,7 +117,8 @@
             <textarea [(ngModel)]="preSale.delivery_address" id="address" class="form-control"></textarea>
           </div>
           <div class="col-md-6 form-group d-flex align-items-end">
-            <button [disabled]="!preSale.delivery_address" (click)="buildDeliveryRemove()" class="btn-ripple btn-fast primary">
+            <button [disabled]="!preSale.delivery_address" (click)="buildDeliveryRemove()"
+                    class="btn-ripple btn-fast primary">
               Pedir e receber em casa
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                 <path
