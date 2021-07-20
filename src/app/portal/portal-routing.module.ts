@@ -1,20 +1,19 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {PortalContainerComponent} from './portal-container.component';
 import {UsersComponent} from './users/users.component';
 import {ProductComponent} from './product/product.component';
 import {PaymentMethodComponent} from './payment-method/payment-method.component';
 import {SalesBoxComponent} from './sales-box/sales-box.component';
-import {ReportsComponent} from './reports/reports.component';
 import {ProductResolver} from '../core/resolver/product.resolver';
 import {PaymentMethodResolver} from '../core/resolver/payment-method.resolver';
 import {UserResolver} from '../core/resolver/user.resolver';
 import {SalesBoxResolver} from '../core/resolver/sales-box.resolver';
-import {ReportsResolver} from '../core/resolver/reports.resolver';
 import {DeliverymanComponent} from './deliveryman/deliveryman.component';
 import {DeliverymanResolver} from '../core/resolver/deliveryman.resolver';
 import {SalesTypeResolver} from '../core/resolver/sales-type.resolver';
 import {ChatPhoneResolver} from '../core/resolver/chat-phone.resolver';
+import {AuthGuard} from '../core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -38,21 +37,30 @@ const routes: Routes = [
         component: UsersComponent,
         resolve: {
           users: UserResolver
-        }
+        },
+        canActivate: [
+          AuthGuard
+        ]
       },
       {
         path: 'entregadores',
         component: DeliverymanComponent,
         resolve: {
           deliveryman: DeliverymanResolver
-        }
+        },
+        canActivate: [
+          AuthGuard
+        ]
       },
       {
         path: 'produtos',
         component: ProductComponent,
         resolve: {
           products: ProductResolver
-        }
+        },
+        canActivate: [
+          AuthGuard
+        ]
       },
       {
         path: 'metodos-de-pagamento',
@@ -61,14 +69,17 @@ const routes: Routes = [
           payments: PaymentMethodResolver,
           salesType: SalesTypeResolver,
           chatPhone: ChatPhoneResolver
-        }
+        },
+        canActivate: [
+          AuthGuard
+        ]
       },
       {
         path: 'relatorios',
-        component: ReportsComponent,
-        resolve: {
-          reports: ReportsResolver
-        }
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
+        canActivate: [
+          AuthGuard
+        ]
       }
     ]
   }
@@ -78,4 +89,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PortalRoutingModule { }
+export class PortalRoutingModule {
+}

@@ -1,0 +1,150 @@
+<div class="top-bar">
+  <h2 class="title">Detalhes</h2>
+</div>
+<div class="container mt-3 pb-2 printable">
+
+  <ng-container *ngIf="urlPath === reportUrlDetailsEnum.CONVERSION">
+    <div class="row ">
+      <div class="col-12 pl-0 pr-0">
+        <h2 class="titles">Detalhes de taxa de conversão do cardápio</h2>
+      </div>
+      <div class="col-12 box pt-3 pb-3">
+        <div class="row">
+          <div class="col-8">
+            <h3>Total pedidos realizados</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{this.reports.preSalesReport.status[0].total + this.reports.preSalesReport.status[1].total}}</h3>
+          </div>
+          <div class="col-8">
+            <h3>Convertidos</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{this.reports.preSalesReport.status[1].total}}</h3>
+          </div>
+          <div class="col-8">
+            <h3>Não Convertidos</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{this.reports.preSalesReport.status[0].total}}</h3>
+          </div>
+          <div class="col-8">
+            <h3>Taxa de conversão</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{(this.reports.preSalesReport.status[1].total / (this.reports.preSalesReport.status[0].total + this.reports.preSalesReport.status[1].total) * 100).toFixed(2)}}
+              %</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="urlPath === reportUrlDetailsEnum.SALES_BY_USER">
+    <div class="row ">
+      <div class="col-12 pl-0 pr-0">
+        <h2 class="titles">Vendas finalizadas por usuário</h2>
+      </div>
+      <div class="col-12 box pt-3 pb-3">
+        <div class="row" *ngFor="let user of reports.salesReports.users">
+          <div class="col-8">
+            <h3>{{user.name}}</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{user.total}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="urlPath === reportUrlDetailsEnum.DELIVERY_BY_DELIVERYMAN">
+    <div class="row ">
+      <div class="col-12 pl-0 pr-0">
+        <h2 class="titles">Entregas por entregadores</h2>
+      </div>
+      <div class="col-12 box pt-3 pb-3">
+        <div class="row" *ngFor="let user of reports.salesReports.deliverymen">
+          <div class="col-8">
+            <h3>{{user.name}}</h3>
+          </div>
+          <div class="col-4 text-right">
+            <h3>{{user.total}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="urlPath === reportUrlDetailsEnum.ALL_PRODUCTS_SALE">
+    <div class="row">
+      <div class="col-12 pl-0 pr-0">
+        <h2 class="titles">Vendas de todos os produtos</h2>
+      </div>
+      <div class="col-12 box pt-3 pb-3">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Porcentagem</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of reports.salesReports.itemsSale; let idx = index">
+              <td>{{product?.name}}</td>
+              <td>{{product?.total | currency: 'BRL'}}</td>
+              <td>
+                {{getPercentage(product.total, reports.salesReports.total).toString()
+                .substring(0, getPercentage(product.total, reports.salesReports.total)
+                  .toString().indexOf('.') + 3).replace('.', ',')}} %
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="urlPath === reportUrlDetailsEnum.ALL_SALES">
+    <div class="row">
+      <div class="col-12 p-0">
+        <h2 class="titles">Todas as vendas</h2>
+      </div>
+      <div class="col-12 box pt-3 pb-3">
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Vendedor</th>
+                  <th scope="col">Valor total</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Forma de pagamento</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let sale of reports.allSales">
+                  <td>{{sale?.name}}</td>
+                  <td>{{sale?.sale_value | currency: 'BRL'}}</td>
+                  <td>{{sale?.sale_date | date: 'dd/MM/YYYY H:mm'}}</td>
+                  <td class="text-uppercase">{{sale?.description}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="row">
+    <div class="col-12 mt-3 text-right">
+      <button (click)="print()" class="btn-fast primary btn-ripple pl-5 pr-5">Imprimir</button>
+    </div>
+  </div>
+</div>

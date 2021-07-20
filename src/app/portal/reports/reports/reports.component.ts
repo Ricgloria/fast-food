@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Sale, SalesReport} from '../../shared/interfaces/sale-box';
+import {Sale, SalesReport} from '../../../shared/interfaces/sale-box';
 import {PaginationInstance} from 'ngx-pagination';
 import {map, take} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {Label, SingleOrMultiDataSet} from 'ng2-charts/lib/base-chart.directive';
-import {ChartData, ChartDataSets, ChartOptions, ChartTooltipItem, ChartType} from 'chart.js';
-import {ReportBasis, ReportInterface} from '../../shared/interfaces/report-basis';
-import {PreSalesReport} from '../../shared/interfaces/pre-sale';
+import {ChartData, ChartTooltipItem, ChartType} from 'chart.js';
+import {ReportBasis, ReportInterface} from '../../../shared/interfaces/report-basis';
+import {PreSalesReport} from '../../../shared/interfaces/pre-sale';
 import ChartDataLabels from 'chartjs-plugin-labels';
+import {Chart} from '../../../shared/interfaces/chart';
+import {SalesBoxControlEnum} from '../../../shared/enum/sales-box-control-enum.enum';
 
 @Component({
   selector: 'app-reports',
@@ -155,20 +156,4 @@ export class ReportsComponent implements OnInit {
   getPercentage(totalProduct: number): number {
     return ((totalProduct / this.total) * 100);
   }
-}
-
-interface Chart {
-  options: ChartOptions;
-  lineChartData: ChartDataSets[];
-  data: SingleOrMultiDataSet;
-  labels: Label[];
-  chartType: ChartType;
-  plugins: any[];
-}
-
-enum SalesBoxControlEnum {
-  SEVEN_DAYS = 1,
-  LAST_MONTH,
-  LAST_SIX_MONTH,
-  FULL_TIME
 }
