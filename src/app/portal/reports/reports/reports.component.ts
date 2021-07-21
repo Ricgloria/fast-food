@@ -129,7 +129,7 @@ export class ReportsComponent implements OnInit {
       plugins: [ChartDataLabels],
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scales: {
           yAxes: [{
             ticks: {
@@ -155,5 +155,9 @@ export class ReportsComponent implements OnInit {
 
   getPercentage(totalProduct: number): number {
     return ((totalProduct / this.total) * 100);
+  }
+
+  print(): void {
+    window.print();
   }
 }

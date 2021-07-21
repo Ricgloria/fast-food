@@ -1,13 +1,50 @@
 <div class="top-bar">
   <h2 class="title">Relatórios</h2>
 </div>
-<div class="container mt-3 pb-2">
+<div class="container mt-3 pb-2 printable">
 
   <div class="row">
-    <div class="col-md-6 mt-3">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 p-0">
+          <h2 class="titles">Todas as vendas</h2>
+        </div>
+        <div class="col-12 box pt-3 pb-3">
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Vendedor</th>
+                    <th scope="col">Valor total</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Forma de pagamento</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let sale of allSales">
+                    <td>{{sale?.name}}</td>
+                    <td>{{sale?.sale_value | currency: 'BRL'}}</td>
+                    <td>{{sale?.sale_date | date: 'dd/MM/YYYY H:mm'}}</td>
+                    <td class="text-uppercase">{{sale?.description}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 mt-3 text-right">
+              <button (click)="print()" class="btn-fast primary btn-ripple pl-5 pr-5">Imprimir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <h2 class="titles">Tipos de venda pelo Cardápio</h2>
+          <a [routerLink]="['./tipos-de-venda-cardapio']" class="titles">Tipos de venda pelo Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -24,10 +61,10 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <h2 class="titles">Métodos de pagamento pelo Cardápio</h2>
+          <a [routerLink]="['./tipos-de-pagamento-cardapio']" class="titles">Métodos de pagamento pelo Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -44,7 +81,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
           <a [routerLink]="['./detalhes-conversao']" class="titles">Conversão de vendas do Cardápio</a>
@@ -64,7 +101,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
           <a [routerLink]="['./vendas-por-usuario']" class="titles">Vendas por usuário</a>
@@ -84,7 +121,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
           <a [routerLink]="['./entregas-por-entregadores']" class="titles">Entregas por Entregadores</a>
@@ -104,7 +141,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
           <h2 class="titles">Métodos de Pagamento de Vendas Finalizadas</h2>
@@ -124,7 +161,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0 h-100">
         <div class="col-12 p-0">
           <h2 class="titles">Tipos de venda finalizadas</h2>
@@ -144,7 +181,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-3">
+    <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0 h-100">
         <div class="col-12 p-0">
           <a [routerLink]="['./todos-os-produtos']" class="titles">Quantidade total de vendas por produto</a>
@@ -174,7 +211,7 @@
       </div>
     </div>
 
-    <div class="col-12 mt-3">
+    <div class="col-12 mt-3 not-printable">
       <div class="row">
         <div class="col-12 p-0">
           <h2 class="titles">Fluxo de caixa</h2>
@@ -191,23 +228,18 @@
               </select>
             </div>
             <div class="col-12">
-              <canvas baseChart
-                      [options]="saleBoxChart.options"
-                      [datasets]="saleBoxChart.lineChartData"
-                      [labels]="saleBoxChart.labels"
-                      [chartType]="saleBoxChart.chartType">
-              </canvas>
+              <div class="table-responsive">
+                <canvas style="min-width: 330px; min-height: 290px" baseChart
+                        [options]="saleBoxChart.options"
+                        [datasets]="saleBoxChart.lineChartData"
+                        [labels]="saleBoxChart.labels"
+                        [chartType]="saleBoxChart.chartType">
+                </canvas>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-  </div>
-
-  <div class="row mt-3">
-    <div class="col-12 p-0">
-      <a [routerLink]="['./todas-as-vendas']" class="titles">Todas as vendas</a>
     </div>
   </div>
 </div>

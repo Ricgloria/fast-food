@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {ReportsComponent} from './reports/reports.component';
 import {ReportsResolver} from '../../core/resolver/reports.resolver';
 import {ReportDetailsComponent} from './report-details/report-details.component';
@@ -8,6 +8,20 @@ const routes: Routes = [
   {
     path: '',
     component: ReportsComponent,
+    resolve: {
+      reports: ReportsResolver
+    }
+  },
+  {
+    path: 'tipos-de-venda-cardapio',
+    component: ReportDetailsComponent,
+    resolve: {
+      reports: ReportsResolver
+    }
+  },
+  {
+    path: 'tipos-de-pagamento-cardapio',
+    component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
@@ -53,4 +67,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ReportsRoutingModule { }
+export class ReportsRoutingModule {
+}

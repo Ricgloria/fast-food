@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {map, take} from 'rxjs/operators';
-import {ReportInterface} from '../../../shared/interfaces/report-basis';
+import {ReportBasis, ReportInterface} from '../../../shared/interfaces/report-basis';
 
 @Component({
   selector: 'app-report-details',
@@ -39,14 +39,23 @@ export class ReportDetailsComponent implements OnInit {
   print(): void {
     window.print();
   }
+
+  sum(reports: ReportBasis[]): number {
+    return reports.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.total;
+    }, 0);
+  }
 }
 
 enum ReportUrlDetailsEnum {
+  MENU_SALES_TYPE = 'tipos-de-venda-cardapio',
+  MENU_PAYMENT_METHOD = 'tipos-de-pagamento-cardapio',
   CONVERSION = 'detalhes-conversao',
   SALES_BY_USER = 'vendas-por-usuario',
   DELIVERY_BY_DELIVERYMAN = 'entregas-por-entregadores',
   ALL_PRODUCTS_SALE = 'todos-os-produtos',
-  ALL_SALES = 'todas-as-vendas',
+  SALES_BOX_SALES_TYPE = 'tipos-de-venda-cardapio',
+  SALES_BOX_PAYMENT_METHOD = 'tipos-de-pagamento-cardapio',
 }
 
 

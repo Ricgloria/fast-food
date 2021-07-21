@@ -232,7 +232,7 @@ input, select {
 }
 
 @media print {
-  .sidebar, .toggle, .top-bar, .btn-fast {
+  .sidebar, .toggle, .top-bar, .btn-fast, .not-printable {
     display: none!important;
   }
 
