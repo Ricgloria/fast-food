@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {map, take} from 'rxjs/operators';
 import {ReportBasis, ReportInterface} from '../../../shared/interfaces/report-basis';
+import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
 
 @Component({
   selector: 'app-report-details',
@@ -12,7 +13,7 @@ export class ReportDetailsComponent implements OnInit {
 
   urlPath = '';
   reports: ReportInterface = {} as ReportInterface;
-  reportUrlDetailsEnum = ReportUrlDetailsEnum;
+  reportUrlDetailsEnum = ReportsDetails;
 
   constructor(
     private activatedRoute: ActivatedRoute
@@ -32,8 +33,8 @@ export class ReportDetailsComponent implements OnInit {
       });
   }
 
-  getPercentage(totalProduct: number, total: number): number {
-    return ((totalProduct / total) * 100);
+  getPercentage(totalProduct: number, total: number): string {
+    return ((totalProduct / total)).toLocaleString('pt-BR', { style: 'percent', minimumFractionDigits: 2 });
   }
 
   print(): void {
@@ -45,17 +46,6 @@ export class ReportDetailsComponent implements OnInit {
       return previousValue + currentValue.total;
     }, 0);
   }
-}
-
-enum ReportUrlDetailsEnum {
-  MENU_SALES_TYPE = 'tipos-de-venda-cardapio',
-  MENU_PAYMENT_METHOD = 'tipos-de-pagamento-cardapio',
-  CONVERSION = 'detalhes-conversao',
-  SALES_BY_USER = 'vendas-por-usuario',
-  DELIVERY_BY_DELIVERYMAN = 'entregas-por-entregadores',
-  ALL_PRODUCTS_SALE = 'todos-os-produtos',
-  SALES_BOX_SALES_TYPE = 'tipos-de-venda-cardapio',
-  SALES_BOX_PAYMENT_METHOD = 'tipos-de-pagamento-cardapio',
 }
 
 

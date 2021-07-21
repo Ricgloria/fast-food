@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ReportsComponent} from './reports/reports.component';
 import {ReportsResolver} from '../../core/resolver/reports.resolver';
 import {ReportDetailsComponent} from './report-details/report-details.component';
+import {ReportsDetails} from '../../shared/enum/reports-details.enum';
 
 const routes: Routes = [
   {
@@ -13,49 +14,56 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tipos-de-venda-cardapio',
+    path:  ReportsDetails.MENU_SALES_TYPE,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'tipos-de-pagamento-cardapio',
+    path: ReportsDetails.MENU_PAYMENT_METHOD,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'detalhes-conversao',
+    path: ReportsDetails.CONVERSION,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'vendas-por-usuario',
+    path: ReportsDetails.SALES_BY_USER,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'entregas-por-entregadores',
+    path: ReportsDetails.DELIVERY_BY_DELIVERYMAN,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'todos-os-produtos',
+    path: ReportsDetails.ALL_PRODUCTS_SALE,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver
     }
   },
   {
-    path: 'todas-as-vendas',
+    path: ReportsDetails.SALES_BOX_SALES_TYPE,
+    component: ReportDetailsComponent,
+    resolve: {
+      reports: ReportsResolver
+    }
+  },
+  {
+    path:  ReportsDetails.SALES_BOX_PAYMENT_METHOD,
     component: ReportDetailsComponent,
     resolve: {
       reports: ReportsResolver

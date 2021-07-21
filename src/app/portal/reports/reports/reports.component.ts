@@ -9,6 +9,7 @@ import {PreSalesReport} from '../../../shared/interfaces/pre-sale';
 import ChartDataLabels from 'chartjs-plugin-labels';
 import {Chart} from '../../../shared/interfaces/chart';
 import {SalesBoxControlEnum} from '../../../shared/enum/sales-box-control-enum.enum';
+import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
 
 @Component({
   selector: 'app-reports',
@@ -47,6 +48,8 @@ export class ReportsComponent implements OnInit {
     currentPage: 1,
     itemsPerPage: 6,
   };
+
+  reportUrlDetailsEnum = ReportsDetails;
 
   constructor(
     private activatedRoute: ActivatedRoute
@@ -155,6 +158,16 @@ export class ReportsComponent implements OnInit {
 
   getPercentage(totalProduct: number): number {
     return ((totalProduct / this.total) * 100);
+  }
+
+  getStringPercentage(totalProduct: number): string {
+    return ((totalProduct / this.total)).toLocaleString('pt-BR', { style: 'percent', minimumFractionDigits: 2 });
+  }
+
+  sum(reports: Sale[]): number {
+    return reports.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.sale_value;
+    }, 0);
   }
 
   print(): void {

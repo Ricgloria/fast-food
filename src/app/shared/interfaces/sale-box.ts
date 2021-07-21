@@ -38,7 +38,7 @@ export interface SendCleanProduct {
 export interface Sale {
   id_sale: number;
   sale_date: Date;
-  sale_value: string;
+  sale_value: number;
   name: string;
   description: string;
 }
