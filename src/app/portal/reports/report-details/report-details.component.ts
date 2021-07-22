@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {map, take} from 'rxjs/operators';
 import {ReportBasis, ReportInterface} from '../../../shared/interfaces/report-basis';
 import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
+import Utils from '../../../shared/helpers/utils';
 
 @Component({
   selector: 'app-report-details',
@@ -11,6 +12,7 @@ import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
 })
 export class ReportDetailsComponent implements OnInit {
 
+  utils = Utils;
   urlPath = '';
   reports: ReportInterface = {} as ReportInterface;
   reportUrlDetailsEnum = ReportsDetails;
@@ -33,19 +35,14 @@ export class ReportDetailsComponent implements OnInit {
       });
   }
 
-  getPercentage(totalProduct: number, total: number): string {
-    return ((totalProduct / total)).toLocaleString('pt-BR', { style: 'percent', minimumFractionDigits: 2 });
-  }
-
   print(): void {
     window.print();
   }
 
-  sum(reports: ReportBasis[]): number {
-    return reports.reduce((previousValue, currentValue) => {
-      return previousValue + currentValue.total;
-    }, 0);
+  getStatusFinishedTotal(): number {
+    return this.reports.preSalesReport.status.find(sta => sta.name === 'Finalizado')?.total || 0;
   }
+
 }
 
 

@@ -10,6 +10,7 @@ import ChartDataLabels from 'chartjs-plugin-labels';
 import {Chart} from '../../../shared/interfaces/chart';
 import {SalesBoxControlEnum} from '../../../shared/enum/sales-box-control-enum.enum';
 import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
+import Utils from '../../../shared/helpers/utils';
 
 @Component({
   selector: 'app-reports',
@@ -18,6 +19,7 @@ import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
 })
 export class ReportsComponent implements OnInit {
 
+  utils = Utils;
   allSales: Sale[] = [];
   allSalesProducts: ReportBasis[] = [];
   total = 0;
@@ -158,10 +160,6 @@ export class ReportsComponent implements OnInit {
 
   getPercentage(totalProduct: number): number {
     return ((totalProduct / this.total) * 100);
-  }
-
-  getStringPercentage(totalProduct: number): string {
-    return ((totalProduct / this.total)).toLocaleString('pt-BR', { style: 'percent', minimumFractionDigits: 2 });
   }
 
   sum(reports: Sale[]): number {

@@ -4,7 +4,32 @@
 <div class="container mt-3 pb-2 printable">
 
   <div class="row">
-    <div class="col-12 not-printable">
+
+    <div class="col-12 box pt-3 pb-3 not-printable">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 form-group">
+          <label for="filter">Filtrar por</label>
+          <select class="form-control custom-select" id="filter">
+            <option>Tudo</option>
+            <option>Data</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-lg-3 form-group">
+          <label for="initial-date">Data início</label>
+          <input class="form-control" id="initial-date" type="date">
+        </div>
+        <div class="col-md-6 col-lg-3 form-group">
+          <label for="final-date">Data fim</label>
+          <input class="form-control" id="final-date" type="date">
+        </div>
+        <div class="col-md-6 col-lg-3 form-group d-flex align-items-end">
+          <button class="btn-fast primary btn-ripple w-100">Buscar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 not-printable mt-3">
       <div class="row">
         <div class="col-12 p-0">
           <h2 class="titles">Todas as vendas</h2>
@@ -57,7 +82,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_SALES_TYPE]" class="titles">Tipos de venda pelo Cardápio</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_SALES_TYPE]" class="titles">Tipos de venda pelo
+            Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -77,7 +103,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_PAYMENT_METHOD]" class="titles">Métodos de pagamento pelo Cardápio</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_PAYMENT_METHOD]" class="titles">Métodos de pagamento pelo
+            Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -137,7 +164,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.DELIVERY_BY_DELIVERYMAN]" class="titles">Entregas por Entregadores</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.DELIVERY_BY_DELIVERYMAN]" class="titles">Entregas por
+            Entregadores</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -157,7 +185,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_PAYMENT_METHOD]" class="titles">Métodos de Pagamento de Vendas Finalizadas</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_PAYMENT_METHOD]" class="titles">Métodos de Pagamento
+            de Vendas Finalizadas</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -177,7 +206,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0 h-100">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_SALES_TYPE]" class="titles">Tipos de vendas finalizadas</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_SALES_TYPE]" class="titles">Tipos de vendas
+            finalizadas</a>
         </div>
         <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -197,7 +227,8 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0 h-100">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.ALL_PRODUCTS_SALE]" class="titles">Quantidade total de vendas por produto</a>
+          <a [routerLink]="['./' + reportUrlDetailsEnum.ALL_PRODUCTS_SALE]" class="titles">Quantidade total de vendas
+            por produto</a>
         </div>
         <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -209,8 +240,9 @@
               <div class="product-report__chart">
                 <span [style.width.%]="getPercentage(products.total)">
                 </span>
-                {{getStringPercentage(products.total)}}
+                {{utils.getPercentage(products.total, total)}}
               </div>
+              <hr class="mt-1 mb-1 w-100">
             </div>
             <div class="col-12 mt-2">
               <pagination-controls

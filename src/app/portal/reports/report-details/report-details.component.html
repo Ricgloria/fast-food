@@ -15,29 +15,10 @@
             <h3>Total pedidos realizados</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.preSalesReport.salesType)}}</h3>
+            <h3>{{utils.getSum(reports.preSalesReport.salesType)}}</h3>
           </div>
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let salesType of reports.preSalesReport.salesType">
-                  <td class="text-uppercase">{{salesType?.name}}</td>
-                  <td>{{salesType?.total}}</td>
-                  <td>
-                    {{getPercentage(salesType.total, sum(reports.preSalesReport.salesType))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.preSalesReport.salesType"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -55,29 +36,10 @@
             <h3>Total pedidos realizados</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.preSalesReport.paymentMethods)}}</h3>
+            <h3>{{utils.getSum(reports.preSalesReport.paymentMethods)}}</h3>
           </div>
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let payment of reports.preSalesReport.paymentMethods">
-                  <td class="text-uppercase">{{payment?.name}}</td>
-                  <td>{{payment?.total}}</td>
-                  <td>
-                    {{getPercentage(payment.total, sum(reports.preSalesReport.paymentMethods))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.preSalesReport.paymentMethods"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -95,39 +57,19 @@
             <h3>Total pedidos realizados</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.preSalesReport.status)}}</h3>
+            <h3>{{utils.getSum(reports.preSalesReport.status)}}</h3>
           </div>
           <div class="col-8">
             <h3>Taxa de conversão</h3>
           </div>
           <div class="col-4 text-right">
             <h3>
-              {{(reports.preSalesReport.status[1].total / (reports.preSalesReport.status[0].total
-              + reports.preSalesReport.status[1].total))
-              .toLocaleString('pt-BR', {style: 'percent', minimumFractionDigits: 2})}}
+              {{utils.getPercentage(getStatusFinishedTotal(),
+              utils.getSum(reports.preSalesReport.status))}}
             </h3>
           </div>
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Status</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let status of reports.preSalesReport.status">
-                  <td class="text-uppercase">{{status?.name}}</td>
-                  <td>{{status?.total}}</td>
-                  <td>
-                    {{getPercentage(status.total, sum(reports.preSalesReport.status))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.preSalesReport.status"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -146,30 +88,11 @@
             <h3>Total vendas finalizadas</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.salesReports.users)}}</h3>
+            <h3>{{utils.getSum(reports.salesReports.users)}}</h3>
           </div>
 
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let user of reports.salesReports.users">
-                  <td class="text-uppercase">{{user?.name}}</td>
-                  <td>{{user?.total}}</td>
-                  <td>
-                    {{getPercentage(user.total, sum(reports.salesReports.users))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.salesReports.users"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -188,30 +111,11 @@
             <h3>Total entregas realizadas</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.salesReports.deliverymen)}}</h3>
+            <h3>{{utils.getSum(reports.salesReports.deliverymen)}}</h3>
           </div>
 
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let user of reports.salesReports.deliverymen">
-                  <td class="text-uppercase">{{user?.name}}</td>
-                  <td>{{user?.total}}</td>
-                  <td>
-                    {{getPercentage(user.total, sum(reports.salesReports.deliverymen))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.salesReports.deliverymen"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -232,28 +136,8 @@
           <div class="col-4 text-right">
             <h3>{{reports.salesReports.total}}</h3>
           </div>
-
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let product of reports.salesReports.itemsSale">
-                  <td>{{product?.name}}</td>
-                  <td>{{product?.total}}</td>
-                  <td>
-                    {{getPercentage(product.total, reports.salesReports.total)}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.salesReports.itemsSale"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -271,29 +155,10 @@
             <h3>Total pedidos realizados</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.salesReports.salesType)}}</h3>
+            <h3>{{utils.getSum(reports.salesReports.salesType)}}</h3>
           </div>
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let salesType of reports.salesReports.salesType">
-                  <td class="text-uppercase">{{salesType?.name}}</td>
-                  <td>{{salesType?.total}}</td>
-                  <td>
-                    {{getPercentage(salesType.total, sum(reports.salesReports.salesType))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.salesReports.salesType"></app-report-details-table>
           </div>
         </div>
       </div>
@@ -311,29 +176,10 @@
             <h3>Total pedidos realizados</h3>
           </div>
           <div class="col-4 text-right">
-            <h3>{{sum(reports.salesReports.paymentMethods)}}</h3>
+            <h3>{{utils.getSum(reports.salesReports.paymentMethods)}}</h3>
           </div>
           <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Porcentagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let payment of reports.salesReports.paymentMethods">
-                  <td class="text-uppercase">{{payment?.name}}</td>
-                  <td>{{payment?.total}}</td>
-                  <td>
-                    {{getPercentage(payment.total, sum(reports.salesReports.paymentMethods))}}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <app-report-details-table [reports]="reports.salesReports.paymentMethods"></app-report-details-table>
           </div>
         </div>
       </div>

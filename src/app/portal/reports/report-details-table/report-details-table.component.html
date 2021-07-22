@@ -1,0 +1,20 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Porcentagem</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let report of reports">
+      <td class="text-uppercase">{{report?.name}}</td>
+      <td>{{report?.total}}</td>
+      <td>
+        {{utils.getPercentage(report.total, utils.getSum(reports))}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
