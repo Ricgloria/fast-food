@@ -6,26 +6,28 @@
   <div class="row">
 
     <div class="col-12 box pt-3 pb-3 not-printable">
-      <div class="row">
+      <form [formGroup]="filterForm" class="row">
         <div class="col-md-6 col-lg-3 form-group">
           <label for="filter">Filtrar por</label>
-          <select class="form-control custom-select" id="filter">
-            <option>Tudo</option>
-            <option>Data</option>
+          <select formControlName="filter" class="form-control custom-select" id="filter">
+            <option value="all">Tudo</option>
+            <option value="date">Data</option>
           </select>
         </div>
-        <div class="col-md-6 col-lg-3 form-group">
-          <label for="initial-date">Data início</label>
-          <input class="form-control" id="initial-date" type="date">
-        </div>
-        <div class="col-md-6 col-lg-3 form-group">
-          <label for="final-date">Data fim</label>
-          <input class="form-control" id="final-date" type="date">
-        </div>
+        <ng-container *ngIf="filterForm.get('filter')?.value === 'date'">
+          <div class="col-md-6 col-lg-3 form-group">
+            <label for="initial-date">Data início</label>
+            <input formControlName="startDate" class="form-control" id="initial-date" type="date">
+          </div>
+          <div class="col-md-6 col-lg-3 form-group">
+            <label for="final-date">Data fim</label>
+            <input formControlName="endDate" class="form-control" id="final-date" type="date">
+          </div>
+        </ng-container>
         <div class="col-md-6 col-lg-3 form-group d-flex align-items-end">
-          <button class="btn-fast primary btn-ripple w-100">Buscar</button>
+          <button class="btn-fast primary btn-ripple w-100" (click)="search()">Buscar</button>
         </div>
-      </div>
+      </form>
     </div>
 
 

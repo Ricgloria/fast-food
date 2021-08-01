@@ -3,6 +3,7 @@ import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PreSale, PreSaleId, PreSalesReport} from '../../shared/interfaces/pre-sale';
+import {paramsBuilder} from '../../shared/helpers/params-builder';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,10 @@ export class PreSalesService {
   }
 
 
-  public getPreSalesReports(): Observable<PreSalesReport> {
-    return this.httpClient.get<PreSalesReport>(`${this.preSales}/reports`);
+  public getPreSalesReports(startDate?: string | null, endDate?: string | null): Observable<PreSalesReport> {
+    const setParams = {startDate, endDate};
+    const params = paramsBuilder(setParams);
+    return this.httpClient.get<PreSalesReport>(`${this.preSales}/reports`, {params});
   }
 
   public getActivePreSaleById(id: number): Observable<PreSale> {

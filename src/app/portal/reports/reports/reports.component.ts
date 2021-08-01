@@ -11,6 +11,12 @@ import {Chart} from '../../../shared/interfaces/chart';
 import {SalesBoxControlEnum} from '../../../shared/enum/sales-box-control-enum.enum';
 import {ReportsDetails} from '../../../shared/enum/reports-details.enum';
 import Utils from '../../../shared/helpers/utils';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {PreSalesService} from '../../../core/services/pre-sales.service';
+import {SalesService} from '../../../core/services/sales.service';
+import {formatDate} from '@angular/common';
+import {forkJoin} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-reports',
@@ -23,6 +29,8 @@ export class ReportsComponent implements OnInit {
   allSales: Sale[] = [];
   allSalesProducts: ReportBasis[] = [];
   total = 0;
+
+  filterForm!: FormGroup;
 
   salesReport!: SalesReport;
 
@@ -54,12 +62,17 @@ export class ReportsComponent implements OnInit {
   reportUrlDetailsEnum = ReportsDetails;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private preSalesService: PreSalesService,
+    private salesService: SalesService,
+    private toastrService: ToastrService
   ) {
   }
 
   ngOnInit(): void {
     this.getData();
+    this.createForm();
   }
 
   getData(): void {
@@ -70,6 +83,37 @@ export class ReportsComponent implements OnInit {
         this.preSalesChartsDataInsert(res.reports.preSalesReport);
         this.salesChartsDataInsert(res.reports.salesReports);
       });
+  }
+
+  createForm(): void {
+    this.filterForm = this.formBuilder.group({
+      filter: ['all'],
+      startDate: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required],
+      endDate: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required],
+    });
+  }
+
+  search(): void {
+    if (this.filterForm.get('filter')?.value === 'all') {
+      this.createForm();
+      this.getFilteredData();
+    } else {
+      const startDate = this.filterForm.get('startDate')?.value;
+      const endDate = this.filterForm.get('endDate')?.value;
+      this.getFilteredData(startDate, endDate);
+    }
+  }
+
+  getFilteredData(startDate?: string, endDate?: string): void {
+    forkJoin({
+      allSales: this.salesService.getAllSales(startDate, endDate),
+      salesReports: this.salesService.getAllSalesReports(startDate, endDate),
+      preSalesReport: this.preSalesService.getPreSalesReports(startDate, endDate)
+    }).subscribe(res => {
+      this.allSales = res.allSales;
+      this.preSalesChartsDataInsert(res.preSalesReport);
+      this.salesChartsDataInsert(res.salesReports);
+    }, () => this.toastrService.error('Houve um erro inesperado'));
   }
 
   preSalesChartsDataInsert(preSalesReport: PreSalesReport): void {

@@ -21,10 +21,12 @@ export class ReportsResolver implements Resolve<ReportInterface> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ReportInterface>
     | Promise<ReportInterface> | ReportInterface {
+    const startDate = route.queryParamMap.get('startDate');
+    const endDate = route.queryParamMap.get('endDate');
     return forkJoin({
-      allSales: this.salesService.getAllSales(),
-      salesReports: this.salesService.getAllSalesReports(),
-      preSalesReport: this.preSalesService.getPreSalesReports()
+      allSales: this.salesService.getAllSales(startDate, endDate),
+      salesReports: this.salesService.getAllSalesReports(startDate, endDate),
+      preSalesReport: this.preSalesService.getPreSalesReports(startDate, endDate)
     }).pipe(catchError(
       err => {
         this.toast.error(err.error.message);
