@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Sale, SalesReport} from '../../../shared/interfaces/sale-box';
 import {PaginationInstance} from 'ngx-pagination';
 import {map, take} from 'rxjs/operators';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ChartData, ChartTooltipItem, ChartType} from 'chart.js';
 import {ReportBasis, ReportInterface} from '../../../shared/interfaces/report-basis';
 import {PreSalesReport} from '../../../shared/interfaces/pre-sale';
@@ -31,6 +31,7 @@ export class ReportsComponent implements OnInit {
   total = 0;
 
   filterForm!: FormGroup;
+  isFiltered = false;
 
   salesReport!: SalesReport;
 
@@ -66,13 +67,24 @@ export class ReportsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private preSalesService: PreSalesService,
     private salesService: SalesService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
     this.getData();
     this.createForm();
+  }
+
+  navigate(route: string): void {
+    if (this.isFiltered) {
+      const startDate = this.filterForm.get('startDate')?.value;
+      const endDate = this.filterForm.get('endDate')?.value;
+      this.router.navigate([`admin/relatorios/${route}`], {queryParams: {startDate, endDate}});
+    } else {
+      this.router.navigate([`admin/relatorios/${route}`]);
+    }
   }
 
   getData(): void {
@@ -95,9 +107,11 @@ export class ReportsComponent implements OnInit {
 
   search(): void {
     if (this.filterForm.get('filter')?.value === 'all') {
+      this.isFiltered = false;
       this.createForm();
       this.getFilteredData();
     } else {
+      this.isFiltered = true;
       const startDate = this.filterForm.get('startDate')?.value;
       const endDate = this.filterForm.get('endDate')?.value;
       this.getFilteredData(startDate, endDate);

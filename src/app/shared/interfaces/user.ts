@@ -1,7 +1,9 @@
+import {UserPermission} from '../enum/user-permission.enum';
+
 export interface User {
   id_user?: number;
   name: string;
-  permission: string;
+  permission: UserPermission;
   cpf: string;
   phone: string;
   password?: string;

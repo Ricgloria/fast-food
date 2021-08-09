@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -13,7 +13,8 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient
-  ) { }
+  ) {
+  }
 
   public getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.user);
@@ -33,5 +34,13 @@ export class UserService {
 
   public deleteUser(id: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.user}/${id}`);
+  }
+
+  public resetPassword(id: number): Observable<any> {
+    return this.httpClient.patch<any>(`${this.user}/${id}`, {});
+  }
+
+  public renewPassword(password: any): Observable<any> {
+    return this.httpClient.patch<any>(`${this.user}/renew`, password);
   }
 }

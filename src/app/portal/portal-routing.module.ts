@@ -14,6 +14,7 @@ import {DeliverymanResolver} from '../core/resolver/deliveryman.resolver';
 import {SalesTypeResolver} from '../core/resolver/sales-type.resolver';
 import {ChatPhoneResolver} from '../core/resolver/chat-phone.resolver';
 import {AuthGuard} from '../core/guards/auth.guard';
+import {PasswordChangeComponent} from './password-change/password-change.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,10 @@ const routes: Routes = [
         canActivate: [
           AuthGuard
         ]
+      },
+      {
+        path: 'mudar-senha',
+        component: PasswordChangeComponent
       },
       {
         path: 'relatorios',

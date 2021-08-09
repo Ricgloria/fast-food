@@ -67,6 +67,9 @@
             <button (click)="seeState()" class="btn btn-outline-secondary mr-2 mt-2">Cancelar visualização</button>
             <button (click)="editState()"
                     class="btn btn-outline-secondary mr-2 mt-2">{{isEdit ? 'Cancelar edição' : 'Editar'}}</button>
+            <button (click)="resetPassword()"
+                    class="btn btn-outline-secondary mr-2 mt-2">Resetar senha
+            </button>
           </ng-container>
           <button [disabled]="userForm.invalid || userForm.disabled || !userForm.dirty" (click)="saveUser()"
                   type="button" class="primary btn-fast btn-ripple mt-2">Salvar
@@ -104,10 +107,13 @@
             <td>{{user.phone | mask: user.phone.length === 10 ? mask.phone : mask.cellphone}}</td>
             <td>{{user.permission | userPermissionPipe}}</td>
             <td>
-              <app-slider-button [ngModel]="!!user.status" (ngModelChange)="change(user, $event)"></app-slider-button>
+              <app-slider-button
+                [disabled]="loggedUser.permission === userPermission.admin && user.permission === userPermission.master"
+                [ngModel]="!!user.status" (ngModelChange)="change(user, $event)"></app-slider-button>
             </td>
             <td class="text-right">
-              <a (click)="onSeeClick(user)" class="pointer">
+              <a *ngIf="!(loggedUser.permission === userPermission.admin && user.permission === userPermission.master)"
+                 (click)="onSeeClick(user)" class="pointer">
                 <img src="../../../assets/img/svg/eye.svg" alt="detalhes">
               </a>
             </td>

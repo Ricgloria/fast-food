@@ -14,6 +14,7 @@ import { PaymentMethodComponent } from './payment-method/payment-method.componen
 import { SalesBoxComponent } from './sales-box/sales-box.component';
 import { DeliverymanComponent } from './deliveryman/deliveryman.component';
 import {ChartsModule} from 'ng2-charts';
+import { PasswordChangeComponent } from './password-change/password-change.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {ChartsModule} from 'ng2-charts';
     ProductComponent,
     PaymentMethodComponent,
     SalesBoxComponent,
-    DeliverymanComponent
+    DeliverymanComponent,
+    PasswordChangeComponent
   ],
   imports: [
     CommonModule,

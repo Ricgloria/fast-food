@@ -84,7 +84,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_SALES_TYPE]" class="titles">Tipos de venda pelo
+          <a (click)="navigate(reportUrlDetailsEnum.MENU_SALES_TYPE)" class="titles">Tipos de venda pelo
             Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
@@ -105,7 +105,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.MENU_PAYMENT_METHOD]" class="titles">Métodos de pagamento pelo
+          <a (click)="navigate(reportUrlDetailsEnum.MENU_PAYMENT_METHOD)" class="titles">Métodos de pagamento pelo
             Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
@@ -126,7 +126,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.CONVERSION]" class="titles">Conversão de vendas do Cardápio</a>
+          <a (click)="navigate(reportUrlDetailsEnum.CONVERSION)" class="titles">Conversão de vendas do Cardápio</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -146,7 +146,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BY_USER]" class="titles">Vendas por usuário</a>
+          <a (click)="navigate(reportUrlDetailsEnum.SALES_BY_USER)" class="titles">Vendas por usuário</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
           <div class="row">
@@ -166,7 +166,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.DELIVERY_BY_DELIVERYMAN]" class="titles">Entregas por
+          <a (click)="navigate(reportUrlDetailsEnum.DELIVERY_BY_DELIVERYMAN)" class="titles">Entregas por
             Entregadores</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
@@ -187,7 +187,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_PAYMENT_METHOD]" class="titles">Métodos de Pagamento
+          <a (click)="navigate(reportUrlDetailsEnum.SALES_BOX_PAYMENT_METHOD)" class="titles">Métodos de Pagamento
             de Vendas Finalizadas</a>
         </div>
         <div class="col-12 box pt-3 pb-3">
@@ -208,7 +208,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row mr-md-0 h-100">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.SALES_BOX_SALES_TYPE]" class="titles">Tipos de vendas
+          <a (click)="navigate(reportUrlDetailsEnum.SALES_BOX_SALES_TYPE)" class="titles">Tipos de vendas
             finalizadas</a>
         </div>
         <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">
@@ -229,7 +229,7 @@
     <div class="col-md-6 mt-3 not-printable">
       <div class="row ml-md-0 h-100">
         <div class="col-12 p-0">
-          <a [routerLink]="['./' + reportUrlDetailsEnum.ALL_PRODUCTS_SALE]" class="titles">Quantidade total de vendas
+          <a (click)="navigate(reportUrlDetailsEnum.ALL_PRODUCTS_SALE)" class="titles">Quantidade total de vendas
             por produto</a>
         </div>
         <div style="height: calc(100% - 27px)" class="col-12 box pt-3 pb-3">

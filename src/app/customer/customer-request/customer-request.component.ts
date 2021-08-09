@@ -87,7 +87,13 @@ export class CustomerRequestComponent implements OnInit {
 
   buildToRemove(): void {
     let message = this.buildProductsMessageAndID();
-    message = `${message} *Observações*: ${this.preSale.note}`;
+    message = `${message}\n*Observações*: ${this.preSale.note}\n*Forma de pagamento*: ${this.getPaymentMethodDescription()}`;
+    if (this.forceToNUmber(this.preSale.id_payment_method) === this.paymentMethodEnum.MONEY) {
+      message = `${message} \n*Troco para:* ${new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(Number(this.changesFor))}`;
+    }
     this.preSale.delivery_address = '';
     this.sendPreSale(message);
   }

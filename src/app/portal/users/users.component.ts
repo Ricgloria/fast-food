@@ -9,6 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../core/services/user.service';
 import {Subscription} from 'rxjs';
 import {debounceTime, take} from 'rxjs/operators';
+import {AuthService} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -36,11 +37,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   filteredUsers: User[] = [];
 
+  loggedUser: User = this.authService.getLoggedUserStorage();
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private toast: ToastrService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {
   }
 
@@ -152,7 +156,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.toast.success(res.message);
         this.seeState();
       },
-      error => this.toast.error(error)
+      () => this.toast.error('Erro, existem registros atrelados ao usuário')
     );
   }
 
@@ -189,6 +193,14 @@ export class UsersComponent implements OnInit, OnDestroy {
       },
       error => this.toast.error(error)
     );
+  }
+
+  resetPassword(): void {
+    const id = this.userForm.get('id_user')?.value;
+    this.userService.resetPassword(id).pipe(take(1)).subscribe(
+      res => {
+        this.toast.success(res.message);
+      }, error => this.toast.error(error.error.message));
   }
 
   change(user: User, event: boolean): void {
