@@ -141,10 +141,10 @@ export class SalesBoxComponent implements OnInit {
     };
 
     this.salesService.postSale(sendSale).subscribe(
-      () => {
+      resp => {
         this.toast.success('Venda realizada com sucesso');
         if (this.saleForm?.get('id_sale')?.value) {
-          this.finalizePreSale(this.saleForm?.get('id_sale')?.value);
+          this.finalizePreSale(this.saleForm?.get('id_sale')?.value, resp.insertId);
         } else {
           this.clearBox();
         }
@@ -188,11 +188,13 @@ export class SalesBoxComponent implements OnInit {
     });
   }
 
-  finalizePreSale(id: number | string): void {
-    this.preSalesService.patchFinishPreSale(id).pipe(take(1)).subscribe(
-      () => {
+  finalizePreSale(id: number | string, insertId: number | string): void {
+    this.preSalesService.patchFinishPreSale(id, insertId).pipe(take(1)).subscribe(
+      resp => {
         this.clearBox();
         this.toast.success('Pré venda finalizada com sucesso');
+        this.deliveryTime.time = resp.delivery_time;
+        this.inPlaceTime.time = resp.time;
       },
       error => {
         this.toast.error(error.error.message);

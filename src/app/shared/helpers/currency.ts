@@ -2,7 +2,7 @@ import {CurrencyMaskConfig, CurrencyMaskInputMode} from 'ngx-currency';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ',',
   precision: 2,

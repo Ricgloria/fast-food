@@ -141,7 +141,7 @@ export class DeliverymanComponent implements OnInit, OnDestroy {
         this.toast.success(res.message);
         this.seeState();
       },
-      error => this.toast.error(error)
+      () => this.toast.error('Erro, existem registros atrelados ao entregador')
     );
   }
 

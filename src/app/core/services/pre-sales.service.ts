@@ -40,7 +40,7 @@ export class PreSalesService {
     return this.httpClient.post<PreSaleId>(this.preSales, preSale);
   }
 
-  public patchFinishPreSale(id: number | string): Observable<any> {
-    return this.httpClient.patch<any>(`${this.preSales}/${id}`, {});
+  public patchFinishPreSale(id: number | string, insertId: number | string): Observable<any> {
+    return this.httpClient.patch<any>(`${this.preSales}/${id}/${insertId}`, {});
   }
 }

@@ -10,6 +10,7 @@ import {UserService} from '../../core/services/user.service';
 import {Subscription} from 'rxjs';
 import {debounceTime, take} from 'rxjs/operators';
 import {AuthService} from '../../core/services/auth.service';
+import {CustomValidator} from '../../shared/custom-validator/custom-validator';
 
 @Component({
   selector: 'app-users',
@@ -105,7 +106,10 @@ export class UsersComponent implements OnInit, OnDestroy {
       id_user: [user.id_user],
       name: [user?.name, Validators.required],
       permission: [user?.permission, Validators.required],
-      cpf: [user?.cpf, Validators.required],
+      cpf: [user?.cpf, Validators.compose([
+        Validators.required,
+        CustomValidator.CpfValidator
+      ])],
       phone: [user?.phone, Validators.required],
       status: [user?.status, Validators.required],
       address: [user?.address, Validators.required]
@@ -116,7 +120,10 @@ export class UsersComponent implements OnInit, OnDestroy {
     return this.formBuilder.group({
       name: ['', Validators.required],
       permission: [null, Validators.required],
-      cpf: ['', Validators.required],
+      cpf: ['', Validators.compose([
+        Validators.required,
+        CustomValidator.CpfValidator
+      ])],
       phone: ['', Validators.required],
       password: ['', Validators.required],
       address: ['', Validators.required],

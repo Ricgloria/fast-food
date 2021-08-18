@@ -24,7 +24,7 @@ body {
 
 .form-group {
   label {
-    font-size: 12px;
+    font-size: 14px;
     padding-left: 10px;
     margin-bottom: 5px;
     color: $secondary-text-color;
@@ -39,7 +39,7 @@ body {
 
 .form-control::placeholder {
   color: $secondary-text-color;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .btn-ripple {

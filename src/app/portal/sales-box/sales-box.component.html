@@ -7,27 +7,18 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-3 form-group">
       <label>Buscar pré venda</label>
-      <input [(ngModel)]="preSale" type="number" placeholder="Insira o numero do pedido"  class="form-control">
+      <input [(ngModel)]="preSale" mask="9*" type="text" placeholder="Insira o numero do pedido"  class="form-control">
       <button (click)="getPreSale()" [disabled]="!preSale" class="btn-fast btn-ripple primary mt-3 w-100">
         Buscar
       </button>
     </div>
     <div class="col-lg-3 form-group">
       <label>Tempo médio delivery (minutos)</label>
-      <input [(ngModel)]="deliveryTime.time" type="number" class="form-control">
-      <button
-        (click)="changeTime(deliveryTime)" [disabled]="!deliveryTime.time"
-        class="btn-fast btn-ripple primary mt-3 w-100">Salvar
-      </button>
+      <input [(ngModel)]="deliveryTime.time" readonly mask="9*" type="text" class="form-control">
     </div>
     <div class="col-lg-3 form-group">
       <label>Tempo médio retirada/local (minutos)</label>
-      <input [(ngModel)]="inPlaceTime.time" type="number" class="form-control">
-      <button
-        (click)="changeTime(inPlaceTime)" [disabled]="!inPlaceTime.time"
-        class="btn-fast btn-ripple primary mt-3 w-100">Salvar
-      </button>
-
+      <input [(ngModel)]="inPlaceTime.time" readonly mask="9*" type="text" class="form-control">
     </div>
   </div>
 
